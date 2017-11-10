@@ -1,15 +1,20 @@
+var fs = require("fs");
+
 module.exports = function (text, callback) {
     var words = parser(text);
     var counts = counter(words);
     console.log(words);
     console.log(counts);
-
-
+    removeStopWords(words);
 
 }
 
 var parser = function (text) {
     var seprators = [' ', '/', '.', ',', '?', '>', '<', '""', "''", ';', ':', '\\', ']', '[', '}', '{', '+', '=', '-', '_', ')', '(', '*', '&', '^', '%', '$', '#', '@', '!', '~', '`', '\n', '\t'];
+    
+    ///////////////////////////////////////////
+    //todo:repeted seprators should be handled
+    //////////////////////////////////////////
 
     seprators.forEach(function (char) {
         text = text.replace(char, " ");
@@ -51,4 +56,15 @@ var counter = function (words) {
         }
     });
     return results;
+}
+var removeStopWords = function (words) {
+    var contents = fs.readFileSync("./resources/fa.json");
+    var stopWords = JSON.parse(contents);
+    console.log(stopWords);
+    words.forEach(function (word) {
+        if (stopWords.includes(word)) {
+            words.splice(words.indexOf(word), 1);
+        }
+    })
+    console.log(words);
 }
