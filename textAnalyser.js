@@ -11,7 +11,6 @@ module.exports = function (text, callback) {
 var parser = function (text) {
     var seprators = [' ', '/', '.', ',', '?', '>', '<', '""', "''", ';', ':', '\\', ']', '[', '}', '{', '+', '=', '-', '_', ')', '(', '*', '&', '^', '%', '$', '#', '@', '!', '~', '`', '\n', '\t'];
 
-    //todo: multiple space should be handeled
     seprators.forEach(function (char) {
         text = text.replace(char, " ");
     })
@@ -19,24 +18,18 @@ var parser = function (text) {
         text = text.slice(0, text.length - 1);
     }
     var words = [];
-    var length = text.lastIndexOf(" ");
     while (text.lastIndexOf(" ") != -1) {
-        if(text.charAt(text.indexOf(" ")+1)!=" "){
-        words.push(text.slice(0, text.indexOf(" ")));
-        
-        text = text.slice(text.indexOf(" ") + 1);
+        //Handeling multiple " " (spaces)
+        while (text.startsWith(" ")) {
+            text = text.slice(text.indexOf(" ") + 1);
         }
-        else{
-//            words.push(text.slice(0, text.indexOf(" ")));
-            
-            text = text.slice(text.indexOf(" ") + 2);
+        if (text.lastIndexOf(" ") != -1) {
+            words.push(text.slice(0, text.indexOf(" ")));
+            text = text.slice(text.indexOf(" ") + 1);
         }
     }
     words.push(text);
-    // console.log(words);
     return words;
-
-
 }
 
 var counter = function (words) {
