@@ -1,9 +1,10 @@
-const mongoose=require("mongoose");
+var mongoose=require('mongoose');
 
-var chatsSchema=mongoose.Schema({
-    chatId:String,
-    chatTiltle:String,
-    chatType:String
-})
-
-module.exports=mongoose.model("chats",chatsSchema);
+var sc_chats = mongoose.Schema({
+  chatId:{type:'string'},
+   trusted:{type:'number',required:true,default:0},//0:NotTrusted , 1:trusted
+   
+    
+});
+//user collection
+module.exports=mongoose.model('user',sc_user);
