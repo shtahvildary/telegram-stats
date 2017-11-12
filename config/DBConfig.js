@@ -6,4 +6,5 @@ db.once('open',function(){
   console.log("DB is connected...LET'S GO!");
 });
 
+
 module.exports=db;

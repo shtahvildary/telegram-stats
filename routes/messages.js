@@ -32,9 +32,10 @@ router.post('/chart/daily', function (req, res) {
         if (!err) {
             
             var msgCounts=[];
-            result.foreach(function(message){
+            result.forEach(function(message){
                 msgCounts[indexOf(message.date.getHours())]+=1;
             });
+            res.status(200).json({text:msgCounts})
         } else {
             res.status(500).json({
                 error: err

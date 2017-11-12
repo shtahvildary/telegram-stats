@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var user_sc=require("../schema/users");
+var auth=require('../tools/auth');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -13,8 +14,11 @@ router.post('/register', function (req, res) {
   var user = new user_sc(req.body);
   user.save(function (err, result) {
     if (!err) {
+
+      var token=auth.tokenize(result._id);
       res.json({
-        user: result
+        user: result,
+        token:token
       });
     } else {
       res.json({
@@ -32,8 +36,10 @@ router.post('/login', function (req, res) {
   }, function (err, result) {
     if (!err) {
       if (result) {
+        var token=auth.tokenize(result._id);
         res.json({
-          user: result
+          user: result,
+          token:token
         });
       } else {
         res.status(401).json({
