@@ -114,8 +114,12 @@ function drawLineChart(element, data) {
 }
 (function ($) {
     $(function () {
-        post('/messages/chart/daily',{date:Date.now()},function(resoinse) {
-            response=JSON.parse(response);
+
+        
+        var now=new Date();
+        post('/messages/chart/daily',{date:now},function(response) {
+            console.log(response)
+            // response=JSON.parse(response);
             drawLineChart('chart-msg-today', {
                 labels: [
                     '0',
@@ -160,70 +164,35 @@ function drawLineChart(element, data) {
                 ]
             })
         });
+        post('/messages/chart/weekly',{date:now},function(response){
+            drawLineChart('chart-msg-thisweek', {
+                labels: [
+                    'شنبه',
+                    'یکشنبه',
+                    'دوشنبه',
+                    'سه شنبه',
+                    'چهارشنبه',
+                    'پنجشنبه',
+                    'جمعه'
+                ],
+                datasets: [
+                    {
+                        label: 'متن',
+                        data: response.text
+                    }, {
+                        label: 'عکس',
+                        data: response.image
+                    }, {
+                        label: 'ویدیو',
+                        data: response.video
+                    }, {
+                        label: 'صوت',
+                        data: response.voice
+                    }
+                ]
+            })
+        });
 
     }); // end of document ready
 })(jQuery); // end of jQuery name space
 
-drawLineChart('chart-msg-thisweek', {
-    labels: [
-        'شنبه',
-        'یکشنبه',
-        'دوشنبه',
-        'سه شنبه',
-        'چهارشنبه',
-        'پنجشنبه',
-        'جمعه'
-    ],
-    datasets: [
-        {
-            label: 'متن',
-            data: [
-                2900,
-                3500,
-                7000,
-                1245,
-                1232,
-                1234,
-                5643,
-                2322
-            ]
-        }, {
-            label: 'عکس',
-            data: [
-                7000,
-                1233,
-                3244,
-                6755,
-                3443,
-                5332,
-                2344,
-                6433
-            ]
-        }, {
-            label: 'ویدیو',
-            data: [
-                3213,
-                4534,
-                2322,
-                7666,
-                4544,
-                2433,
-                4243,
-                5435
-            ]
-        }, {
-            label: 'صوت',
-            data: [
-                8774,
-                2343,
-                4232,
-                5435,
-                3453,
-                3222,
-                2444,
-                5643,
-                7654
-            ]
-        }
-    ]
-})

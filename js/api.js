@@ -9,10 +9,11 @@ var post = function (endpoint, data,callback) {
     $
         .ajax({
             method: "POST",
-            url: "localhost:5001" +endpoint,
+            url: "http://localhost:5001" +endpoint,
             data: data
         })
         .done(function (msg) {
+            console.log(msg)
             callback(msg)
         });
 }

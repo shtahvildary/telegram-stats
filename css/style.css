@@ -10,7 +10,7 @@ body {
   background-color: #f5f5f5;
 }
 .collection-item p{
-  direction: ltr ;
+  direction: rtl ;
 }
 .card-action a{
   color:#03a9f4 !important;
