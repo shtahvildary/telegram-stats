@@ -19,12 +19,21 @@ router.post('/select/all/date', function (req, res) {
 })
 
 //date.gethours
-router.post('/select/date', function (req, res) {
-    message_sc.find({}).sort('-date').exec(function (err, result) {
+router.post('/chart/daily', function (req, res) {
+    console.log(req.body);
+    var h0=new Date(req.body.date);
+    var h24=new Date(req.body.date);
+    console.log(h0);
+    h0.setHours(0,0,0,0);
+    h24.setHours(23,59,59,999);
+    
+    message_sc.find({'date':{$gt:h0},'date':{$lt:h24}}).exec(function (err, result) {
         //pagination should be handled
         if (!err) {
-            res.status(200).json({
-                messages: result
+            
+            var msgCounts=[];
+            result.foreach(function(message){
+                msgCounts[indexOf(message.date.getHours())]+=1;
             });
         } else {
             res.status(500).json({
