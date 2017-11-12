@@ -20,6 +20,25 @@ router.post('/select/all/date', function (req, res) {
 })
 
 //select all sort by date
+router.post('/search', function (req, res) {
+    
+    console.log('query',req.body)
+    message_sc.find({ "message" : { $regex: req.body.query, $options: 'i' } }).exec(function (err, result) {
+        console.log(err)
+        //pagination should be handled
+        if (!err) {
+            res.status(200).json({
+                messages: result
+            });
+        } else {
+            res.status(500).json({
+                error: err
+            });
+        }
+    })
+})
+
+//select all sort by date
 router.post('/select/last/date', function (req, res) {
     message_sc.find({}).sort('-date').limit(5).exec(function (err, result) {
         //pagination should be handled
