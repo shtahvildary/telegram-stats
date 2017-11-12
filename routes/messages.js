@@ -31,9 +31,12 @@ router.post('/chart/daily', function (req, res) {
         //pagination should be handled
         if (!err) {
             
-            var msgCounts=[];
+            var msgCounts=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+            // console.log(msgCounts.length)
+            
+            
             result.forEach(function(message){
-                msgCounts[indexOf(message.date.getHours())]+=1;
+                msgCounts[message.date.getHours()]+=1;
             });
             res.status(200).json({text:msgCounts})
         } else {

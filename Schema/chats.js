@@ -7,4 +7,4 @@ var sc_chats = mongoose.Schema({
     
 });
 //user collection
-module.exports=mongoose.model('user',sc_user);
+module.exports=mongoose.model('chat',sc_user);
