@@ -1,27 +1,34 @@
 var messageDB = require("./Schema/Messages");
 const botgram = require("botgram");
+var  textAnalyser= require("./textAnalyser");
 const db = require("./config/DBConfig");
 
-var textAnalyser = require('./textAnalyser')("Some Text       Here! به همه دوستان ولی ... سلام");
+//var textAnalyser = require('./textAnalyser')("Some Text       Here! به همه دوستان ولی ... سلام");
 
 var bot = botgram("456299862:AAGB1q_AMolsLpeE5EARolW4FHEi5-1kqjE");
 bot.command("start", function (msg, reply) {
-    console.log(msg);
+    //console.log(msg);
     reply.text("salammmmm");
 })
 
 bot.text(function (msg, reply) {
 
-    console.log(msg);
+    //console.log(msg);
+    var AnalyseResult=textAnalyser(msg.text);
+    console.log("analyseResult:",AnalyseResult);
+    //var keywords=msg.hashtags().concat(AnalyseResult);
+
     var newMessage = new messageDB({
         type: msg.type,
         chatId: msg.chat.id,
         chatTitle: msg.chat.title,
         message: msg.text,
-        keywords: msg.hashtags()
+        //keywords: msg.hashtags()
+        keywords: AnalyseResult
     })
     newMessage.save();
     //reply.text("salammmmm");
+
 })
 bot.video(function (msg, reply, next) {
     var newVideo = new messageDB({

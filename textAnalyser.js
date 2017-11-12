@@ -2,10 +2,11 @@ var fs = require("fs");
 
 module.exports = function (text, callback) {
     var words = parser(text);
+    words=removeStopWords(words);    
     var counts = counter(words);
-    console.log(words);
-    console.log(counts);
-    removeStopWords(words);
+    return counts;
+    //console.log(words);
+    //console.log(counts);
 
 }
 
@@ -60,11 +61,12 @@ var counter = function (words) {
 var removeStopWords = function (words) {
     var contents = fs.readFileSync("./resources/fa.json");
     var stopWords = JSON.parse(contents);
-    console.log(stopWords);
+    //console.log(stopWords);
     words.forEach(function (word) {
         if (stopWords.includes(word)) {
             words.splice(words.indexOf(word), 1);
         }
     })
-    console.log(words);
+    return words;
+    //console.log(words);
 }
