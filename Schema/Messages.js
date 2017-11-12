@@ -6,7 +6,7 @@ var messageSchema=mongoose.Schema({
     type:String,
     message:String,
     date:{type:Date,default:Date.now},
-    keywords:[String],
+    keywords:[{word:String,count:Number}],
     //video,Audio,voice,photo,document,sticker,videoNote
     fileId:String,
     mime:String,

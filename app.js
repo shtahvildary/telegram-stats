@@ -26,7 +26,12 @@ bot.text(function (msg, reply) {
         //keywords: msg.hashtags()
         keywords: AnalyseResult
     })
-    newMessage.save();
+    newMessage.save(function(err,savedMessage){
+      console.log(err)
+      if(err) return reply.text('پیام شما ثبت نشد. لطفا دوباره سعی کنید.');
+      reply.text('پیام شما با موفقیت ارسال شد.');
+      
+    });
     //reply.text("salammmmm");
 
 })
