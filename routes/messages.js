@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var message_sc = require("../schema/messages");
+var message_sc = require("../Schema/messages");
 var moment=require('moment');
 
 //select all sort by date
