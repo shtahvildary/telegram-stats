@@ -2,7 +2,7 @@ var a={};
 var bcrypt=require('bcrypt-nodejs');
 var jwt=require('jsonwebtoken');
 var consts=require('../config/consts');
-var User=require('../Schema/user.js')
+var User=require('../Schema/user')
 a.tokenize=function(user_id){
     var token = jwt.sign({ id: user_id }, consts.secret, { expiresIn: 604000 })
     return token;
