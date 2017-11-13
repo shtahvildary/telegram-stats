@@ -1,4 +1,5 @@
 (function($){
+  console.log("token",$.cookie("token"))
   if(!$.cookie("token")){
     window.location.replace("login.html");
   }
