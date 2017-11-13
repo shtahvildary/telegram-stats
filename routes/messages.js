@@ -24,7 +24,7 @@ router.post('/select/all/date', function (req, res) {
 router.post('/search',  function (req, res) {
     
     console.log('query',req.body)
-    message_sc.find({ "message" : { $regex: req.body.query, $options: 'i' } }).exec(function (err, result) {
+    message_sc.find({ "message" : { $regex: req.body.query, $options: 'i' } }).sort('-date').exec(function (err, result) {
         console.log(err)
         //pagination should be handled
         if (!err) {
