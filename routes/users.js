@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var user_sc=require("../schema/users");
+var user_sc=require("../Schema/user");
 var auth=require('../tools/auth');
 
 /* GET users listing. */
@@ -43,12 +43,14 @@ router.post('/login', function (req, res) {
         });
       } else {
         res.status(401).json({
-          error: 'unauthorized user'
+          error: 'unauthorized user',
+          auth:false
         })
       }
     } else {
       res.status(500).json({
-        error: err
+        error: err,
+        auth:false
       })
     }
   })

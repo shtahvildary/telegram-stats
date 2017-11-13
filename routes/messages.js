@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var message_sc = require("../Schema/messages");
 var moment=require('moment');
+var auth=require('../tools/auth');
 
 //select all sort by date
 router.post('/select/all/date', function (req, res) {
@@ -20,7 +21,7 @@ router.post('/select/all/date', function (req, res) {
 })
 
 //select all sort by date
-router.post('/search', function (req, res) {
+router.post('/search',auth.checkToken,  function (req, res) {
     
     console.log('query',req.body)
     message_sc.find({ "message" : { $regex: req.body.query, $options: 'i' } }).exec(function (err, result) {
