@@ -1,6 +1,12 @@
 (function ($) {
     $(function () {
-        
+        console.log('test')
+        $( "#btnsubmit" ).click(function() {
+            var username=$("#username").val();
+            var password=$("#password").val();
+            console.log(username,password);
+            login({username:username,password:password});
+          });
         
     }); // end of document ready
     var register=function(user){
@@ -20,6 +26,8 @@
             }
             else{
                 $.cookie("token", response.token);
+                window.location.replace("index.html");
+                
             }
         });
     }
