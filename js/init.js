@@ -1,4 +1,7 @@
 (function($){
+  // if(!$.cookie("token")){
+  //   window.location.replace("login.html");
+  // }
   $(function(){
 
     $('.button-collapse').sideNav();
