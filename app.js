@@ -1,4 +1,4 @@
-require('dotenv')
+require('dotenv').config();
 var messageDB = require("./Schema/Messages");
 const botgram = require("botgram");
 var  textAnalyser= require("./textAnalyser");
