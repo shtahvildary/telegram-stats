@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "botgram": "^2.0.1",
+    "dotenv": "^4.0.0",
     "mongoose": "^4.13.1"
   }
 }
