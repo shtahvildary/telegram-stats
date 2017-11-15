@@ -9,7 +9,7 @@ const db = require("./config/DBConfig");
 var bot = botgram("456299862:AAGB1q_AMolsLpeE5EARolW4FHEi5-1kqjE");
 bot.command("start", function (msg, reply) {
     //console.log(msg);
-    reply.text("salammmmm");
+    reply.text("سلام، خوش آمدید");
 })
 
 bot.text(function (msg, reply) {
@@ -33,7 +33,7 @@ bot.text(function (msg, reply) {
       reply.text('پیام شما با موفقیت ارسال شد.');
       
     });
-    //reply.text("salammmmm");
+   
 
 })
 bot.video(function (msg, reply, next) {
@@ -47,7 +47,12 @@ bot.video(function (msg, reply, next) {
         VideoCaption: msg.caption
 
     });
-    newVideo.save();
+    newVideo.save(function(err,savedMessage){
+        console.log(err)
+        if(err) return reply.text('پیام شما ثبت نشد. لطفا دوباره سعی کنید.');
+        reply.text('پیام شما با موفقیت ارسال شد.');
+        
+      });
     download(msg.file);
     
 })
@@ -63,7 +68,12 @@ bot.audio(function (msg, reply, next) {
         AudioTitle: msg.title
 
     });
-    newAudio.save();
+    newAudio.save(function(err,savedMessage){
+        console.log(err)
+        if(err) return reply.text('پیام شما ثبت نشد. لطفا دوباره سعی کنید.');
+        reply.text('پیام شما با موفقیت ارسال شد.');
+        
+      });
     download(msg.file);
     
 })
@@ -77,7 +87,12 @@ bot.voice(function (msg, reply, next) {
         mime: msg.file.mime
 
     });
-    newVoice.save();
+    newVoice.save(function(err,savedMessage){
+        console.log(err)
+        if(err) return reply.text('پیام شما ثبت نشد. لطفا دوباره سعی کنید.');
+        reply.text('پیام شما با موفقیت ارسال شد.');
+        
+      });
     download(msg.file);
 })
 //bot.contact(function (msg, reply, next) {
@@ -92,7 +107,12 @@ bot.photo(function (msg, reply, next) {
         //image:msg.image,
         caption: msg.caption
     });
-    newPhoto.save();
+    newPhoto.save(function(err,savedMessage){
+        console.log(err)
+        if(err) return reply.text('پیام شما ثبت نشد. لطفا دوباره سعی کنید.');
+        reply.text('پیام شما با موفقیت ارسال شد.');
+        
+      });
 
     download(msg.file);
     
@@ -109,7 +129,12 @@ bot.document(function (msg, reply, next) {
         fileName: msg.filename
 
     });
-    newDocument.save();
+    newDocument.save(function(err,savedMessage){
+        console.log(err)
+        if(err) return reply.text('پیام شما ثبت نشد. لطفا دوباره سعی کنید.');
+        reply.text('پیام شما با موفقیت ارسال شد.');
+        
+      });
     
     download(msg.file);    
 })
@@ -125,7 +150,12 @@ bot.sticker(function (msg, reply, next) {
         emoji: msg.emoji
 
     });
-    newSticker.save();
+    // newSticker.save(function(err,savedMessage){
+    //     console.log(err)
+    //     if(err) return reply.text('پیام شما ثبت نشد. لطفا دوباره سعی کنید.');
+    //     reply.text('پیام شما با موفقیت ارسال شد.');
+        
+    //   });
 
 })
 // bot.videoNote(function (msg, reply, next) {
@@ -139,13 +169,22 @@ bot.sticker(function (msg, reply, next) {
 //     newVideoNote.save();
 // })
 function download(msgFile){
+    var link;
+
     bot.fileGet(msgFile, function (err, info) {
         if (err) throw err;
+        console.log(msgFile.type);
+        link=bot.fileLink(info);
         console.log("We got the link:", bot.fileLink(info));
       });
       bot.fileLoad(msgFile, function (err, buffer) {
+        
+        var fileName=link.slice(link.lastIndexOf("/")+1,link.length);
+        console.log(link);
+        console.log('file name:'+fileName);
+
         if (err) throw err;
         console.log("Downloaded! Writing to disk...");
-        require("fs").writeFile("voice.ogg", buffer);
+        require("fs").writeFile(fileName, buffer);
       });
 }
