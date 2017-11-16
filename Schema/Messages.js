@@ -2,6 +2,7 @@ const mongoose=require("mongoose");
 
 var messageSchema=mongoose.Schema({
     chatId:String,
+    chatType:String,
     chatTiltle:String,
     type:String,
     message:String,
