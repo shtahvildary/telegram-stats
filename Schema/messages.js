@@ -3,7 +3,8 @@ const mongoose=require("mongoose");
 var messageSchema=mongoose.Schema({
     chatId:String,
     chatTiltle:String,
-    type:String,
+    type:String,    
+    chatType:String,
     message:String,
     date:{type:Date,default:Date.now},
     keywords:[{word:String,count:Number}],
