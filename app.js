@@ -9,11 +9,24 @@ const db = require("./config/DBConfig");
 var bot = botgram("456299862:AAGB1q_AMolsLpeE5EARolW4FHEi5-1kqjE");
 bot.command("start", function (msg, reply) {
   //console.log(msg);
-  reply.text("سلام، خوش آمدید");
+  reply.inlineKeyboard([[{text:"hey",callback_data:JSON.stringify({typ3e:"hey"})}]]).text("سلام، خوش آمدید");
 })
-
-bot.text(function (msg, reply) {
-
+// bot.text( function (msg, reply, next) {
+//   reply.inlineKeyboard([[
+//     { text: "↑  Turn up", callback_data: JSON.stringify({ type: "volume", direction: true }) },
+//     { text: "↓  Turn down", callback_data: JSON.stringify({ type: "volume", direction: false }) },
+//   ]]);
+//   reply.text("Use the buttons below to modify the volume:");
+// });
+bot.callback(function (query, next) {
+  var data = JSON.parse(query.data);
+  if (data.name == 'button1') {
+    query.answer(data.matn);
+  }
+});
+bot.text(function (msg, reply,next) {
+  reply.inlineKeyboard([[{text:"hey",callback_data:JSON.stringify({typ3e:"hey"})}]]).text("سلام، خوش آمدید");
+  
   //console.log(msg);
   var AnalyseResult = textAnalyser(msg.text);
   console.log("analyseResult:", AnalyseResult);
@@ -32,25 +45,41 @@ bot.text(function (msg, reply) {
     console.log(err)
     if (newMessage.chatType == "user") {
       if (err) return reply.text('پیام شما ثبت نشد. لطفا دوباره سعی کنید.');
-      reply.text('پیام شما با موفقیت ارسال شد.');
+      var inlineKeys = [
+        [{
+          text: 'دکمه اول',
+          callback_data: JSON.stringify({
+            name: "button1",
+            matn: "دکتر سلام"
+          })
+        }]
+      ]
+      // reply.inlineKeyboard(inlineKeys);
+      reply.inlineKeyboard([[
+        { text: "↑  Turn up", callback_data: JSON.stringify({ type: "volume", direction: true }) },
+        { text: "↓  Turn down", callback_data: JSON.stringify({ type: "volume", direction: false }) },
+      ]]).
+      text('پیام شما با موفقیت ارسال شد.')
     }
 
   });
-  reply.inlineKeyboard[[{
-      text: "1",
-      data: JSON.stringify({
-        type: "volume",
-        direction: true
-      })
-    },
-    {
-      text: "2",
-      data: JSON.stringify({
-        type: "volume",
-        direction: false
-      })
-    }
-  ]];
+  var keys = [
+    [{
+        text: "1",
+
+      },
+      {
+        text: "2",
+
+      }, {
+        text: '3'
+      }
+    ],
+    [{
+      text: '4'
+    }]
+  ];
+  reply.keyboard(keys, true)
 
 })
 bot.video(function (msg, reply, next) {
