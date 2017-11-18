@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "auth": "0.0.9",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
@@ -16,7 +17,7 @@
     "moment": "^2.19.2",
     "mongoose": "^4.13.1",
     "morgan": "~1.9.0",
-    "pug": "2.0.0-beta11",
+    "pug": "^2.0.0-beta11",
     "serve-favicon": "~2.4.5"
   }
 }
