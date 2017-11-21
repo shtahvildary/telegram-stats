@@ -397,6 +397,9 @@ bot.photo(function (msg, reply, next) {
     chatType: msg.chat.type,
     chatTitle: msg.chat.title,
 
+    fileId: msg.image.file.id,
+    //mime: msg.file.mime,
+
     //image:msg.image,
     caption: msg.caption
   });
@@ -409,8 +412,8 @@ bot.photo(function (msg, reply, next) {
     }
 
   });
-
-  // download(msg.file);
+console.log(msg);
+  download(msg.image.file);
 
 
 })
@@ -478,13 +481,28 @@ function download(msgFile) {
     console.log("We got the link:", bot.fileLink(info));
   });
   bot.fileLoad(msgFile, function (err, buffer) {
+    
+    //VOICE:
+    // var fileIndex=msgFile.mime.slice(msgFile.mime.lastIndexOf("/")+1,msgFile.mime.lenght);
+    // var fileName = "./public/files/"+msgFile.path;
 
-    var fileName = link.slice(link.lastIndexOf("/") + 1, link.length);
+    /////////////////////////////////
+    //photo and audio and video and document
+    var fileName = "./public/files/"+msgFile.path;
+    ////////////////////////////////
+
+    
     console.log(link);
     console.log('file name:' + fileName);
 
     if (err) throw err;
     console.log("Downloaded! Writing to disk...");
+    
+    //voice:
+    // require("fs").writeFile(fileName+"."+fileIndex, buffer);
+
+    //photo and audio and video and document
     require("fs").writeFile(fileName, buffer);
+    
   });
 }
