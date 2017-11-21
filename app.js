@@ -1,6 +1,8 @@
+//import { networkInterfaces } from 'os';
+
 require('dotenv').config();
 var messageDB = require("./Schema/Messages");
-var programsDB = require("./Schema/programs");
+var voteItemsDB = require("./Schema/voteItems");
 var votesDB = require("./Schema/votes");
 const botgram = require("botgram");
 var textAnalyser = require("./textAnalyser");
@@ -27,14 +29,55 @@ var mainMenueKeys = [
 ];
 //////////////////////////////////////////////////////
 //todo: programs names should be read from programsDB:
-var programs=programsDB.find();
-var programsKeys = [
-  [{
-    text: "دکتر سلام"
-  }, {
-    text: "پرسشگر"
-  }]
-];
+//var voteItems=new voteItemsDB;
+var programs;
+var programsCount
+voteItemsDB.find({}).exec(function (err, result) {
+  if (err) throw err;
+  //console.log(result);
+  programs = result
+  programsCount = result.length;
+  //console.log("programs list:" + programs[0].title);
+
+});
+
+//console.log(programs);
+var progK = [] //[[{text:"hello",callback_data:JSON.stringify({})}],
+//[{text:"hello",callback_data:JSON.stringify({})}]];
+
+function fillPrograms() {
+  for (var i = 0; i < (programsCount); i++) {
+    progK.push([{
+      text: programs[i].title,
+      callback_data: JSON.stringify({
+        type: "progK",
+        //programId: 1,
+        programId: programs[i]._id,
+        //programName: programs[i].title
+      })
+    }
+  ]);
+  }
+}
+// fillPrograms();
+
+//   var progK = [
+//   [{
+//     text: "دکتر سلام",
+//     callback_data: JSON.stringify({
+//       type: "progK",
+//       programId: "5a1096833c8ad110c1c64207",
+//       programName: "دکتر سلام"
+//     })
+//   }, {
+//     text: "پرسشگر",
+//     callback_data: JSON.stringify({
+//       type: "progK",
+//       programId: "5a1096ee3c8ad110c1c64208",
+//       programName: "پرسشگر"
+//     })
+//   }]
+// ];
 
 var scoreKeys = [
   [{
@@ -80,7 +123,7 @@ bot.command("start", function (msg, reply) {
 
 
 })
-
+//callback for mainMenueKeys
 bot.callback(function (query, next) {
   var data;
   try {
@@ -91,9 +134,6 @@ bot.callback(function (query, next) {
   if (data.type !== "mainMenueKeys")
     return next();
   if (data.action == "channelVoting") {
-    // query.answer({
-    //   text: "show scoreKeys"
-    // });
     reqHandler("sendMessage", {
       text: "به کانال تلگرامی ما از ۱ تا ۵ چه امتیازی می دهید؟",
       chat_id: query.from.id,
@@ -101,8 +141,94 @@ bot.callback(function (query, next) {
         inline_keyboard: scoreKeys
       }
     }, function (body) {});
+  } else if (data.action == "programsVoting") {
+    if (progK.length == 0) {
+      fillPrograms();
+    }
+    console.log(progK)
+    reqHandler("sendMessage", {
+      text: "لطفا برنامه مورد نظر خود را انتخاب نمایید.",
+      chat_id: query.from.id,
+      reply_markup: {
+        inline_keyboard: progK
+      }
+      
+
+    }, function (body) {})
+  }
+  });
+
+bot.callback(function (query, next) {
+  var data;
+  try {
+    data = JSON.parse(query.data);
+  } catch (e) {
+    return next()
+  }
+  if (data.type !== "progK") {
+return next();
+  }
+  else {
+    console.log(data);
+    reqHandler("sendMessage", {
+      text: "به برنامه" + data.programId + " از ۱ تا ۵ چه امتیازی می دهید؟",
+      chat_id: query.from.id,
+      reply_markup: {
+        inline_keyboard: scoreKeys
+      }
+    }, function (body) {})
+  }
+})
+
+//callback for scoreKeys
+bot.callback(function (query, next) {
+  var data;
+  try {
+    data = JSON.parse(query.data);
+  } catch (e) {
+    return next();
+  }
+  if (data.type !== "scoreKeys")
+    return next();
+  //   switch(data.score){
+  //     case "1":
+
+  // }
+  else {
+    console.log("data for voting:"+data)
+    
+    var newVote = new votesDB({
+      chatId: query.from.id,
+      //type: String, //channel or program voting
+      vote: {
+        destinationId: data.programId, //channelId or programId
+        score: data.score
+      }
+    })
+    
+    newVote.save(function (err, savedVote) {
+      console.log(err)
+
+      if (err) //return reply.text('نظر شما ثبت نشد. لطفا دوباره سعی کنید.');
+        reqHandler("sendMessage", {
+          text: 'نظر شما ثبت نشد. لطفا دوباره سعی کنید.',
+          chat_id: query.from.id,
+          reply_markup: {
+            inline_keyboard: scoreKeys
+          }
+        }, function (body) {});
+      else {
+        //reply.text('نظر شما با موفقیت ارسال شد.');
+        reqHandler("sendMessage", {
+          text: 'نظر شما با موفقیت ثبت شد.',
+          chat_id: query.from.id,
+        }, function (body) {});
+        //console.log(savedVote);
+      }
+    });
   }
 });
+//callback for progK
 bot.callback(function (query, next) {
   var data;
   try {
@@ -121,7 +247,7 @@ bot.callback(function (query, next) {
       chatId: query.from.id,
       //type: String, //channel or program voting
       vote: {
-        //destinationId: String, //channelId or programId
+        destinationId: data.programId,
         score: data.score
       }
     })
