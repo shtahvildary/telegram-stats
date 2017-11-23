@@ -20,8 +20,27 @@ keyboards.mainMenueKeys = [
     ]
 ];
 
-keyboards.fillVoteItems = function (callback) {
-    voteItemsDB.find({}).exec(function (err, result) {
+keyboards.fillProgramVoteItems = function (callback) {
+    voteItemsDB.find({'type':1}).exec(function (err, result) {
+        var voteItemKeys = []
+        if (err) throw err;
+
+        result.forEach(function (item) {
+            voteItemKeys.push([{
+                text: item.title,
+                callback_data: JSON.stringify({
+                    type: 1,    //voteItemKeys
+                    //voteItemId: 1,
+                    voteItemId: item._id,
+                    //voteItemName: item.title
+                })
+            }]);
+        })
+        callback(voteItemKeys)
+    });
+}
+keyboards.fillChannelVoteItems = function (callback) {
+    voteItemsDB.find({'type':0}).exec(function (err, result) {
         var voteItemKeys = []
         if (err) throw err;
 
@@ -57,47 +76,5 @@ keyboards.fillScoreKeys = function (scoreCount, voteItemId, callback) {
     callback(scoreKeys);
     console.log(scoreKeys);
 }
-// keyboards.scoreKeys = [
-//     [{
-//         text: "1",
-//         callback_data: JSON.stringify({
-//             type: "scoreKeys",
-//             score: "1",
-//             voteItemId:""
-//         })
-//     }, {
-//         text: "2",
-//         callback_data: JSON.stringify({
-//             type: "scoreKeys",
-//             score: "2",
-//             voteItemId:""            
-//         })
-//     }, {
-//         text: "3",
-//         callback_data: JSON.stringify({
-//             type: "scoreKeys",
-//             score: "3",
-//             voteItemId:""            
-//         })
-//     }, {
-//         text: "4",
-//         callback_data: JSON.stringify({
-//             type: "scoreKeys",
-//             score: "4",
-//             voteItemId:""            
-//         })
-//     }, {
-//         text: "5",
-//         callback_data: JSON.stringify({
-//             type: "scoreKeys",
-//             score: "5",
-//             voteItemId:""            
-//         })
-//     }]
-// ]
-
-console.log(keyboards);
-console.log(keyboards.mainMenueKeys);
-console.log(keyboards.scoreKeys);
 
 module.exports = keyboards;

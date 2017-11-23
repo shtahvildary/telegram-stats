@@ -1,5 +1,7 @@
 var bot;
-module.exports = function (mainBot) {
+var channelId;
+module.exports = function (mainBot,mainChannelId) {
     bot = mainBot;
-    require("./callbacks")(bot);
+    channelId=mainChannelId
+    require("./callbacks")(bot,channelId);
 }
