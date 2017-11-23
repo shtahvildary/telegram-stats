@@ -20,7 +20,7 @@ router.post('/select/all/date', function (req, res) {
     })
 })
 
-//select all sort by date
+//search
 router.post('/search',  function (req, res) {
     
     console.log('query',req.body)
@@ -39,7 +39,7 @@ router.post('/search',  function (req, res) {
     })
 })
 
-//select all sort by date
+//Select last 5 messages sort by date
 router.post('/select/last/date', function (req, res) {
     message_sc.find({}).sort('-date').limit(5).exec(function (err, result) {
         //pagination should be handled
