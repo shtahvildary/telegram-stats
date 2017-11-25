@@ -64,3 +64,6 @@ voice.ogg
 .DS_Store
 .DS_Store
 .DS_Store
+package-lock.json
+package.json
+package-lock.json
