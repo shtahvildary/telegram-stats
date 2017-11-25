@@ -67,3 +67,9 @@ voice.ogg
 package-lock.json
 package.json
 package-lock.json
+.vscode/launch.json
+.vscode/launch.json
+.vscode/settings.json
+.vscode/launch.json
+*.json
+*.json
