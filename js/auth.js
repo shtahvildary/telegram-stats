@@ -20,6 +20,7 @@
         });
     }
     var login=function(auth){
+        console.log('hey')
         post('/users/login',auth,function(response){
             if(response.auth==false){
                 alert("عملیات ورود با موفقیت همراه نبود. لطفا دوباره سعی کنید.")
@@ -27,7 +28,8 @@
             else{
                 // console.log(response.token)
                 $.cookie("token", response.token);
-                window.location.replace("index.html");
+                console.log(response)
+                // window.location.replace("index.html");
                 
             }
         });
