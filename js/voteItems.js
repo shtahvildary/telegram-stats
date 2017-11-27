@@ -1,19 +1,18 @@
 (function ($) {
-
-    $(function () {
-        console.log('test')
+//Add a new vote item
+    $(function () {  
         $("#btnVoteItemsAdd").click(function () {
             var voteItemTitle = $("#voteItemTitle").val();
-            var type = $("#voteItemType").val();
+            var type = $('input[name=voteItemType]:checked').val();
             var description = $("#description").val();
-            console.log(voteItemTitle, type, description);
+            
             addVoteItem({
                 title: voteItemTitle,
-                type: 0
+                type: type
             });
         });
 
-    }); // end of document ready
+    }); 
     var addVoteItem = function (voteItem) {
         post('/voteItems/new', voteItem, function (response) {
             if (response.voteItem == false) {
@@ -23,4 +22,57 @@
             }
         });
     }
-})(jQuery); // end of jQuery name space
+
+    //show a list of vote items    
+        var search_voteItems=function(query){
+            
+            post('/voteItems/all',{query:query},function(response){
+                console.log('search vote items',response)
+                $('#voteItems-list').empty();
+                response.voteItemsArray.map(function(item){
+                $('#voteItems-list').append(`
+                    <div class="card">
+                    <div class="card-content">
+                      
+                      <p>`+item.title+`</p>
+                      
+                    </div>
+                    
+                  </div>`
+                );
+              });
+            })
+        }
+
+
+        $(function () {
+            ////////////////////////////////////
+            //TODO: search shoul be completed 
+            ////////////////////////////////////
+            
+            $('#search').keypress(function (e) {
+                if (e.which == 13) {
+                    var value=$('#search').val();
+                    console.log('query',{text:value})
+                    search_voteItems(value);
+                  return false;    
+                }
+              });
+    
+            post('/voteItems/all',{},function(response){
+                console.log('all vote items',response)
+                response.voteItemsArray.map(function(item){
+                $('#voteItems-list').append(`
+                    <div class="card">
+                    <div class="card-content">
+                      
+                      <p>`+item.title+`</p>
+                      
+                    </div>
+                    
+                  </div>`
+                );
+              });
+            })
+        });
+})(jQuery); 
