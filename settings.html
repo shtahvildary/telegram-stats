@@ -73,36 +73,54 @@
 
 
     <div class="container">
-        <div class="row">
+
+        <form action="#">
+
 
             <form action="#">
                 <p>
                     <input name="voteItemType" type="radio" id="rdbtnChannel" value="0" />
-                    <label for="type1">کانال</label>
+                    <label for="rdbtnChannel">کانال</label>
                 </p>
                 <p>
                     <input name="voteItemType" type="radio" id="rdbtnProgram" value="1" />
-                    <label for="type2">برنامه</label>
+                    <label for="rdbtnProgram">برنامه</label>
+                    <div class="input-field col s6">
                 </p>
-                <input placeholder="نام برنامه یا کانال" id="voteItemTitle" type="text">
+            </form>
+            <div class="row">
+
+                <form>
+                    <div class="input-field col s12">
+                        <input id="voteItemTitle" type="text" class="validate">
+                        <label for="voteItemTitle">عنوان</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea id="description" class="materialize-textarea"></textarea>
+                        <label for="description">توضیحات</label>
+                    </div>
+                </form>
+
                 <button class="btn waves-effect waves-light" type="submit" id="btnVoteItemsAdd">ثبت
                     <i class="material-icons right">send</i>
                 </button>
 
-            </form>
+
+        </form>
 
 
         </div>
-    </div>
 
 
-    <!--  Scripts-->
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="js/jquery.cookie.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/materialize.js"></script>
-    <script src="js/init.js"></script>
-    <script src="js/messages.js"></script>
+
+
+        <!--  Scripts-->
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="js/jquery.cookie.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/materialize.js"></script>
+        <script src="js/init.js"></script>
+        <script src="js/voteItems.js"></script>
 
 
 

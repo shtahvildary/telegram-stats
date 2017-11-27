@@ -5,10 +5,11 @@
         $("#btnVoteItemsAdd").click(function () {
             var voteItemTitle = $("#voteItemTitle").val();
             var type = $("#voteItemType").val();
-            console.log(voteItemTitle, type);
+            var description = $("#description").val();
+            console.log(voteItemTitle, type, description);
             addVoteItem({
                 title: voteItemTitle,
-                type: type
+                type: 0
             });
         });
 
