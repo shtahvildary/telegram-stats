@@ -74,40 +74,41 @@
 
                       <!-- Modal Trigger -->
                       
-                      <a class="waves-effect waves-light btn modal-trigger edit" id="btnEdit" href="#editModal">ویرایش
-                      <i class="material-icons">edit</i></a>
-
+                      
                       <div id="editModal" class="modal edit">
                       <div class="modal-content">
-                        <h5>ویرایش</h5>
-                        <p>
-
-                        <div class="row">
-                                        <form>
-                                            <div class="input-field col s12">
-                                                <input id="voteItemTitle" type="text" class="validate" value="`+item.title+`">
-                                                <label for="voteItemTitle">عنوان</label>
-                                            </div>
-                                            <div class="input-field col s12">
-                                                <textarea id="description" class="materialize-textarea" value="`+item.description+`"></textarea>
-                                                <label for="description">توضیحات</label>
-                                            </div>
-                                        </form>
-                        
-                                        <div class="modal-footer">
-                                        <button class="btn waves-effect waves-light" type="submit" id="btnVoteItemsAdd">ثبت
-                                            <i class="material-icons right">send</i>
-                                        </button>
-                                        <button class="btn waves-effect waves-light" type="submit" id="btnVoteItemsAdd">انصراف
-                                        <i class="material-icons right">cancel</i>
-                                        </button>
-                                        </div>
-                                </div>
-                        </p>
+                      <h5>ویرایش</h5>
+                      <p>
+                      
+                      <div class="row">
+                      <form>
+                      <div class="input-field col s12">
+                      <input id="voteItemTitle" type="text" class="validate" value="`+item.title+`">
+                      <label for="voteItemTitle">عنوان</label>
                       </div>
-
+                      <div class="input-field col s12">
+                      <textarea id="description" class="materialize-textarea" value="`+item.description+`"></textarea>
+                      <label for="description">توضیحات</label>
                       </div>
-
+                      </form>
+                      
+                      <div class="modal-footer">
+                      <button class="btn waves-effect waves-light" type="submit" id="btnVoteItemsAdd">ثبت
+                      <i class="material-icons right">send</i>
+                      </button>
+                      <button class="btn waves-effect waves-light" type="submit" id="btnVoteItemsAdd">انصراف
+                      <i class="material-icons right">cancel</i>
+                      </button>
+                      </div>
+                      </div>
+                      </p>
+                      </div>
+                      
+                      </div>
+                      
+                      <a class="waves-effect waves-light btn modal-trigger edit" id="btnEdit" href="#editModal">ویرایش
+                      <i class="material-icons">edit</i></a>
+                      
                       <a class="waves-effect waves-light btn delete" id="btnDelete" title="` + item.title + `" uniqueId="` + item._id + `" >حذف
                       <i class="material-icons">delete</i></a>
                     </div>   
@@ -143,7 +144,7 @@
         function delete_voteItems(voteItemId) {
             console.log('voteItemId: ', voteItemId);
 
-            post('/voteItems/delete', {
+            post('/voteItems/disable', {
                 _id: voteItemId
             }, function (response) {
                 console.log('delete vote item', response);
