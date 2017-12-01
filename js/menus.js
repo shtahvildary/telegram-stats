@@ -39,7 +39,7 @@ $("#navbar").append(`
 
           <ul class="right side-nav fixed " id="mobile-demo">
               <li>
-                  <a href="index.html">داشبورد</a>
+                  <a href="../index.html">داشبورد</a>
               </li>
               <li>
                   <a href="charts.html">نمودار ها</a>
