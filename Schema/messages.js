@@ -3,6 +3,7 @@ const mongoose=require("mongoose");
 var messageSchema=mongoose.Schema({
     chatId:String,
     chatTiltle:String,
+    voteItemId:String, //channel or program ID
     type:String,    
     chatType:String,
     message:String,
