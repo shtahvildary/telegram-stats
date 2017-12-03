@@ -54,6 +54,9 @@ $("#navbar").append(`
               <li>
                   <a href="settings.html">تنظیمات</a>
               </li>
+              <li>
+              <a href="ConnectAdmin.html">ارتباط با ادمین</a>
+          </li>
           </ul>
       </div>
   </nav>
