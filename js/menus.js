@@ -1,7 +1,7 @@
 
 (function($){
   // $(function(){
-console.log("sdfjaks")
+//console.log("sdfjaks")
 //$("#navbar").load("../navbar.html"); 
 $("#navbar").append(`
 

@@ -65,63 +65,78 @@
             console.log('all vote items', response)
             response.voteItemsArray.map(function (item) {
                 $('#voteItems-list').append(`
-                    <div class="card" unqueId=` + item._id + `>
+
+                <div class="card" unqueId=` + item._id + `>
                     <div class="card-content">
-                      
-                    <p>` + item.title + `</p>
-                      <p>` + item.description + `</p>
-                      <p>` + item.personnels + `</p>
-
-                      <!-- Modal Trigger -->
-                      
-                      
-                      <div id="editModal" class="modal edit">
-                      <div class="modal-content">
-                      <h5>ویرایش</h5>
-                      <p>
-                      
-                      <div class="row">
-                      <form>
-                      <div class="input-field col s12">
-                      <input id="voteItemTitle" type="text" class="validate" value="`+item.title+`">
-                      <label for="voteItemTitle">عنوان</label>
-                      </div>
-                      <div class="input-field col s12">
-                      <textarea id="description" class="materialize-textarea" value="`+item.description+`"></textarea>
-                      <label for="description">توضیحات</label>
-                      </div>
-                      </form>
-                      
-                      <div class="modal-footer">
-                      <button class="btn waves-effect waves-light" type="submit" id="btnVoteItemsAdd">ثبت
-                      <i class="material-icons right">send</i>
-                      </button>
-                      <button class="btn waves-effect waves-light" type="submit" id="btnVoteItemsAdd">انصراف
-                      <i class="material-icons right">cancel</i>
-                      </button>
-                      </div>
-                      </div>
-                      </p>
-                      </div>
-                      
-                      </div>
-                      
-                      <a class="waves-effect waves-light btn modal-trigger edit" id="btnEdit" href="#editModal">ویرایش
-                      <i class="material-icons">edit</i></a>
-                      
-                      <a class="waves-effect waves-light btn delete" id="btnDelete" title="` + item.title + `" uniqueId="` + item._id + `" >حذف
-                      <i class="material-icons">delete</i></a>
+                        <p>` + item.title + `</p>
+                        <p>` + item.description + `</p>
+                        <p>` + item.personnels + `</p>
+                        <a class="waves-effect waves-light btn modal-trigger edit" id="btnEdit-` + item._id + `" href="#editModal" editItem_id="` + item._id + `" editItem_title="` + item.title + `" editItem_description="` + item.description + `" editItem_personnels="` + item.personnels + `">ویرایش
+                        <i class="material-icons">edit</i></a>
+                        <a class="waves-effect waves-light btn delete" id="btnDelete" title="` + item.title + `" uniqueId="` + item._id + `" >حذف
+                        <i class="material-icons">delete</i></a>
                     </div>   
-
-
-                    
-                  </div>`);
-                  
+                </div>`);
             });
 
+            // <a class="waves-effect waves-light btn modal-trigger edit" id="btnEdit-` + item._id + `" href="#editModal" editItem="` + JSON.stringify(item)+ `">ویرایش
 
-            $('.edit').modal();
 
+            // var voteItemEdit={
+            //     title:0,
+            //     description:0
+            // };
+
+            $('.edit').click(function (e) {
+                console.log('btn edit is clicked');
+                //console.log($(this).attr('editItem'));
+
+                // var voteItemEdit=JSON.parse($(this).attr('editItem'));
+                var voteItemEdit = {
+                    id: $(this).attr('editItem_id'),
+                    title: $(this).attr('editItem_title'),
+                    personnels: $(this).attr('editItem_personnels'),
+                    description: $(this).attr('editItem_description'),
+                };
+
+                console.log(voteItemEdit);
+
+                $('#voteItems-list').after(`
+            
+            <!-- Modal Trigger -->
+            <div id="editModal" class="modal edit">
+                <div class="modal-content">
+                    <h5>ویرایش</h5>
+                    <p>
+            
+                        <div class="row">
+                            <form>
+                                <div class="input-field col s12">
+                                    <input id="voteItemTitle" type="text" class="validate" value="` + voteItemEdit.title + `">
+                                    <label for="voteItemTitle">عنوان</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <textarea id="description" class="materialize-textarea" value="` + voteItemEdit.description + `"></textarea>
+                                    <label for="description">توضیحات</label>
+                                </div>
+                            </form>
+            
+                            <div class="modal-footer">
+                                <button class="btn waves-effect waves-light" type="submit" id="btnVoteItemsAdd">ثبت
+                                   <i class="material-icons right">send</i>
+                                </button>
+                                <button class="btn waves-effect waves-light" type="submit" id="btnVoteItemsAdd">انصراف
+                                   <i class="material-icons right">cancel</i>
+                                </button>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+            `);
+
+                $('.edit').modal();
+            })
 
 
             $('.delete').click(function (e) {
@@ -140,7 +155,28 @@
             })
 
         })
-       
+
+        function edit_fillModal(voteItemId) {
+
+        }
+
+        function edit_voteItems(voteItemEdit) {
+            console.log('voteItemId: ', voteItemEdit);
+            post('/voteItems/update', {
+                _id: voteItemEdit.id,
+                title = voteItemEdit.title,
+                type = voteItemEdit.type,
+                description = voteItemEdit.description,
+                channelId = voteItemEdit.channelId,
+                personnels = voteItemEdit.personnels,
+            }, function (response) {
+                console.log('edit vote item', response);
+
+            })
+
+        }
+
+
         function delete_voteItems(voteItemId) {
             console.log('voteItemId: ', voteItemId);
 
