@@ -108,24 +108,28 @@
                 <div class="modal-content">
                     <h5>ویرایش</h5>
                     <p>
-            
-                        <div class="row">
                             <form>
+                            <div class="row">
                                 <div class="input-field col s12">
                                     <input id="voteItemTitle" type="text" class="validate" value="` + voteItemEdit.title + `">
-                                    <label for="voteItemTitle">عنوان</label>
+                                    <label class="active" for="voteItemTitle">عنوان</label>
                                 </div>
+                                </div>
+                                
+                                <div class="row">
                                 <div class="input-field col s12">
-                                    <textarea id="description" class="materialize-textarea" value="` + voteItemEdit.description + `"></textarea>
-                                    <label for="description">توضیحات</label>
+                                    <textarea id="description" type="text" class="materialize-textarea">` + voteItemEdit.description + `</textarea>
+                                    <label class="active" for="description">توضیحات</label>
                                 </div>
+                                </div>
+                                
                             </form>
             
                             <div class="modal-footer">
-                                <button class="btn waves-effect waves-light" type="submit" id="btnVoteItemsAdd">ثبت
+                                <button class="btn waves-effect waves-light" id="btnVoteItemsUpdate">ثبت
                                    <i class="material-icons right">send</i>
                                 </button>
-                                <button class="btn waves-effect waves-light" type="submit" id="btnVoteItemsAdd">انصراف
+                                <button class="btn waves-effect waves-light modal-close">انصراف
                                    <i class="material-icons right">cancel</i>
                                 </button>
                             </div>
@@ -134,10 +138,8 @@
                 </div>
             </div>
             `);
-
                 $('.edit').modal();
             })
-
 
             $('.delete').click(function (e) {
                 console.log('btn clicked')
@@ -154,21 +156,39 @@
                 }
             })
 
+            $('#btnVoteItemsUpdate').click(function (e) {
+
+                console.log('btn Update is clicked!');
+                // console.log(voteItemEdit);
+                voteItemEdit = {
+                    //id: $(this).attr('editItem_id'),
+                    title: $('#voteItemTitle').val(),
+                    //personnels: $(this).attr('editItem_personnels'),
+                    description: $('#description').val(),
+                }
+                edit_voteItems(voteItemEdit);
+                if (!e) {
+                    $('#editModal').modal('close');
+                    alert("به روز رسانی با موفقیت انجام شد.");
+                } else {
+                    alert("در به روز رسانی اطلاعات خطایی رخ داده، لطفا دوباره اقدام نمایید. کدخطا: " + e)
+                }
+            })
         })
 
-        function edit_fillModal(voteItemId) {
 
-        }
+
+
 
         function edit_voteItems(voteItemEdit) {
-            console.log('voteItemId: ', voteItemEdit);
+            console.log('voteItemEdit: ', voteItemEdit);
             post('/voteItems/update', {
                 _id: voteItemEdit.id,
-                title = voteItemEdit.title,
-                type = voteItemEdit.type,
-                description = voteItemEdit.description,
-                channelId = voteItemEdit.channelId,
-                personnels = voteItemEdit.personnels,
+                title: voteItemEdit.title,
+                type: voteItemEdit.type,
+                description: voteItemEdit.description,
+                channelId: voteItemEdit.channelId,
+                personnels: voteItemEdit.personnels,
             }, function (response) {
                 console.log('edit vote item', response);
 
