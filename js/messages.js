@@ -9,12 +9,15 @@
             $('#messages-list').append(`
                 <div class="card">
                 <div class="card-content">
+                
                   <p>`+item.message+`</p>
                   <p>`+item.date+`</p>
                   <a class="waves-effect waves-light btn modal-trigger reply" id="btnReply-` + item._id + `" href="#replyModal">پاسخ
                   <i class="material-icons">reply</i></a>
                   
+                  
                 </div>
+                
                 
               </div>`
             );
@@ -61,7 +64,7 @@
         <!-- Modal Trigger -->
         <div id="replyModal" class="modal reply">
             <div class="modal-content">
-                <h5>ویرایش</h5>
+                <h5>پاسخ</h5>
                 <p>
                         <form>
                         <div class="row">
