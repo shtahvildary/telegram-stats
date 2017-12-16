@@ -155,5 +155,35 @@ router.post('/chart/monthly', function (req, res) {
         }
     })
 })
+//save reply for a message
+router.post('/reply',function(req,res){
+    console.log('query:',req.body)
+    message_sc.findById(req.body._id).exec(function(err,result){
+      if(!err){
+        console.log("message:",result)
+        console.log("req.body.reply:",req.body.replys)
+        if(result.reply){
+        result.reply.push(req.body.reply||result.replys);
+         }
+         else{
+        result.replys=req.body.replys||result.replys;
+        
+         }
+        // Save the updated document back to the database
+        result.save(function(err,result){
+          if(!err){
+            res.status(200).send(result);
+          }
+          else{
+            res.status(500).send(err)
+          }
+        })
+      }else {
+        res.status(500).json({
+          error: err
+        });
+      }
+    })
+  })
 
 module.exports = router;
