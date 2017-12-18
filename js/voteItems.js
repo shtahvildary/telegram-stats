@@ -7,12 +7,12 @@
         var voteItemEdit;
         // function update_voteItem(){
         //     post('/voteItems/update', voteItemEdit,
-                
+
         //      function (response) {
         //         console.log('edit vote item', response);
 
         //     })
-                
+
         // }
 
         $("#btnVoteItemsAdd").click(function () {
@@ -58,7 +58,7 @@
         })
     }
 
-  
+
 
     $(function () {
         ////////////////////////////////////
@@ -96,8 +96,8 @@
 
             // <a class="waves-effect waves-light btn modal-trigger edit" id="btnEdit-` + item._id + `" href="#editModal" editItem="` + JSON.stringify(item)+ `">ویرایش
 
-          
-            
+
+
             // var voteItemEdit={
             //     title:0,
             //     description:0
@@ -108,7 +108,7 @@
                 //console.log($(this).attr('editItem'));
 
                 // var voteItemEdit=JSON.parse($(this).attr('editItem'));
-               
+
                 voteItemEdit = {
                     id: $(this).attr('editItem_id'),
                     title: $(this).attr('editItem_title'),
@@ -158,26 +158,26 @@
 
 
                 $('#btnVoteItemsUpdate').click(function (e) {
-                    
-                                    console.log('btn Update is clicked!');
-                                    // console.log(voteItemEdit);
-                                    voteItemEdit .title=$('#voteItemTitle').val();
-                                        //id: $(this).attr('editItem_id'),
-                                         
-                                        //personnels: $(this).attr('editItem_personnels'),
-                                        voteItemEdit.description= $('#description').val();
-                                    
-                                    console.log('voteItemEdit:',voteItemEdit)
-                                    // var status=edit_voteItems(voteItemEdit);
-                                    // console.log('status:',status)
-                                    if (edit_voteItems(voteItemEdit)) {
-                                        // if (status==true) {
-                                        $('#editModal').modal('close');
-                                        alert("به روز رسانی با موفقیت انجام شد.");
-                                    } else {
-                                        alert("در به روز رسانی اطلاعات خطایی رخ داده، لطفا دوباره اقدام نمایید. کدخطا: " + status)
-                                    }
-                                })
+
+                    console.log('btn Update is clicked!');
+                    // console.log(voteItemEdit);
+                    voteItemEdit.title = $('#voteItemTitle').val();
+                    //id: $(this).attr('editItem_id'),
+
+                    //personnels: $(this).attr('editItem_personnels'),
+                    voteItemEdit.description = $('#description').val();
+
+                    console.log('voteItemEdit:', voteItemEdit)
+                    // var status=edit_voteItems(voteItemEdit);
+                    // console.log('status:',status)
+                    if (edit_voteItems(voteItemEdit)) {
+                        // if (status==true) {
+                        $('#editModal').modal('close');
+                        alert("به روز رسانی با موفقیت انجام شد.");
+                    } else {
+                        alert("در به روز رسانی اطلاعات خطایی رخ داده، لطفا دوباره اقدام نمایید. کدخطا: " + status)
+                    }
+                })
             })
 
             $('.delete').click(function (e) {
@@ -193,21 +193,21 @@
                     delete_voteItems(voteItemId);
                     alert("«" + $(this).attr('title') + "» با موفقیت پاک شد.");
                 }
-            })  
+            })
         })
 
         function edit_voteItems(voteItemEdit) {
             console.log('voteItemEdit: ', voteItemEdit);
             post('/voteItems/update', {
                 _id: voteItemEdit.id,
-                 title: voteItemEdit.title,
-                 type: voteItemEdit.type,
+                title: voteItemEdit.title,
+                type: voteItemEdit.type,
                 description: voteItemEdit.description,
-                 channelId: voteItemEdit.channelId,
-                 personnels: voteItemEdit.personnels,
+                channelId: voteItemEdit.channelId,
+                personnels: voteItemEdit.personnels,
             }, function (response) {
                 console.log('edit vote item', response);
-                return new Promise(function(resolve, reject){
+                return new Promise(function (resolve, reject) {
                     resolve(response)
                 })
                 // if(response){return true}
@@ -216,8 +216,6 @@
             })
 
         }
-        
-
 
         function delete_voteItems(voteItemId) {
             console.log('voteItemId: ', voteItemId);
