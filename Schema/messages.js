@@ -9,7 +9,7 @@ var messageSchema=mongoose.Schema({
     message:String,
     date:{type:Date,default:Date.now},
     keywords:[{word:String,count:Number}],
-    replys:[{text:String,userId:mongoose.SchemaTypes.ObjectId}],
+    replys:[{text:String,userId:mongoose.SchemaTypes.ObjectId,date:{type:Date,default:Date.now}}],
     //video,Audio,voice,photo,document,sticker,videoNote
     fileId:String,
     mime:String,

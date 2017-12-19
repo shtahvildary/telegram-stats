@@ -199,14 +199,18 @@ router.post('/reply', function (req, res) {
     message_sc.findById(req.body._id).exec(function (err, result) {
         if (!err) {
             console.log("message:", result)
-            console.log("req.body.reply:", req.body.replys)
+            console.log("req.body.reply:", req.body)
+             var reply={text: req.body.text,
+                //date:req.body.date,
+                userId:req.body.userId
+            }
 
             request({
                 uri: "https://api.telegram.org/bot" + botToken + "/sendMessage",
                 method: 'POST',
                 json: {
                     chat_id: result.chatId,
-                    text: req.body.replys.text
+                    text: req.body.text
                 }
 
             }, function (err, d) {
@@ -218,9 +222,9 @@ router.post('/reply', function (req, res) {
                 } else {
 
                     if (result.reply) {
-                        result.reply.push(req.body.reply || result.replys);
+                        result.reply.push(reply || result.replys);
                     } else {
-                        result.replys = req.body.replys || result.replys;
+                        result.replys = reply || result.replys;
 
                     }
                     // Save the updated document back to the database
