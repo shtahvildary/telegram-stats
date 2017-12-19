@@ -133,14 +133,14 @@
         function replyToMsg(reply) {
             console.log('replyToMsg: ', reply);
 
-            post('/messages/reply', JASON.stringify({
+            post('/messages/reply', {
                 _id: reply.msgId,
                 // chatId: reply.chatId,
-                replys: {
+                
                     text: reply.text,
                     userId: reply.userId
-                }
-            }), function (response) {
+                
+            }, function (response) {
                 console.log('message which U replied:', response);
 
             })
