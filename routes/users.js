@@ -3,6 +3,7 @@ var router = express.Router();
 var user_sc=require("../Schema/user");
 var auth=require('../tools/authentication');
 //var auth=require('../tools/auth');
+var bcrypt=require('bcrypt');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -32,9 +33,19 @@ router.post('/register',auth, function (req, res) {
 
 //Login
 router.post('/login', function (req, res) {
+  bcrypt.hash(req.body.password, 10, function (err, hash){
+    if (err) {
+      res.json({
+        error: err
+      });
+      //return next(err);
+    }
+    req.body.password = hash;
+    //next();
+  })
   user_sc.findOne({
     'username': req.body.username,
-    'password': req.body.password
+    //'password': req.body.password
   }, function (err, result) {
     if (!err) {
       if (result) {
