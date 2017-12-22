@@ -1,6 +1,6 @@
 (function ($) {
     $(function () {
-        console.log('test')
+        console.log('test auth')
         $( "#btnsubmit" ).click(function() {
             var username=$("#username").val();
             var password=$("#password").val();
@@ -21,14 +21,19 @@
     }
     var login=function(auth){
         console.log('hey')
+        
         post('/users/login',auth,function(response){
+            console.log('response:',response)
             if(response.auth==false){
                 alert("عملیات ورود با موفقیت همراه نبود. لطفا دوباره سعی کنید.")
             }
             else{
                 //console.log(response.token)
+                console.log(response.cookie)
                 //$.cookie("token", response.token);
+                $.cookie("token", response.cookie);
                  window.location.replace("index.html");
+                //  window.location.href="index.html";
                 
             }
         });
