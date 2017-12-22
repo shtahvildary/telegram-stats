@@ -1,9 +1,35 @@
+
+
 var express = require('express');
 var router = express.Router();
 var user_sc=require("../Schema/user");
 var auth=require('../tools/authentication');
 //var auth=require('../tools/auth');
 var bcrypt=require('bcrypt');
+
+//use sessions for tracking logins
+
+
+// var session=require('express-session');
+// var MongoStore=require('connect-mongo')
+// var db=require('../config/DBConfig');
+
+// var app = express();
+
+// app.use(session({
+//   secret: 'work hard',
+//   resave: true,
+//   saveUninitialized: false, 
+//   cookie: {
+//     path: '/',
+//     httpOnly: true,
+//     secure: true,
+//     maxAge:  1800000
+// },
+//   store: new MongoStore({
+//     mongooseConnection: db
+//   })
+// }));
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -51,13 +77,17 @@ router.post('/login', function (req, res) {
       if (result) {
         //var token=auth.tokenize(result._id);
       req.session.userId=result._id;
-      console.log(result._id)
+      console.log(req.session.cookie)
       console.log(req.session.userId)
         
         res.json({
           user: result,
-          //token:token
+          cookie:req.session.cookie,
+          sName:req.session.name
         });
+        res.end('done');
+
+        
       } else {
         res.status(401).json({
           error: 'unauthorized user',
@@ -70,6 +100,8 @@ router.post('/login', function (req, res) {
         auth:false
       })
     }
+
+    
   })
 })
 

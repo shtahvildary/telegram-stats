@@ -12,19 +12,37 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var messages=require('./routes/messages');
 var voteItems=require('./routes/voteItems');
-var session=require('express-session')
+var session=require('express-session');
+var MongoStore=require('connect-mongo')
 
 var app = express();
 
 //use sessions for tracking logins
+
+//export default function sessionManagementConfig(app) {
 app.use(session({
+  // secret: serverSettings.session.password,
   secret: 'work hard',
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: false, 
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    secure: false,
+    // secure: true,
+    maxAge:  1800000 //30 mins
+},
+ttl: (1 * 60 * 60),
   // store: new MongoStore({
   //   mongooseConnection: db
-  // })
+  // }),
+  name: "id",
 }));
+// session.Session.prototype.login = function(user, cb){
+//   this.userInfo = user;
+//   cb();
+// };
+// }
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
