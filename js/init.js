@@ -1,9 +1,9 @@
 (function($){
 
 
-  console.log("token",$.cookie("token"))
+  //console.log("token",$.cookie("token"))
   // if(!$.cookie("token")){
-  //   window.location.replace("login.html");
+     window.location.replace("login.html");
   // }
 
 
