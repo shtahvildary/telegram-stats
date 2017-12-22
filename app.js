@@ -13,7 +13,7 @@ var users = require('./routes/users');
 var messages=require('./routes/messages');
 var voteItems=require('./routes/voteItems');
 var session=require('express-session');
-var MongoStore=require('connect-mongo')
+var MongoStore=require('connect-mongo')(session);
 
 var app = express();
 
@@ -33,9 +33,9 @@ app.use(session({
     maxAge:  1800000 //30 mins
 },
 ttl: (1 * 60 * 60),
-  // store: new MongoStore({
-  //   mongooseConnection: db
-  // }),
+  store: new MongoStore({
+    mongooseConnection: db
+  }),
   name: "id",
 }));
 // session.Session.prototype.login = function(user, cb){

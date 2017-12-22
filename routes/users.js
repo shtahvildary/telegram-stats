@@ -7,30 +7,6 @@ var auth=require('../tools/authentication');
 //var auth=require('../tools/auth');
 var bcrypt=require('bcrypt');
 
-//use sessions for tracking logins
-
-
-// var session=require('express-session');
-// var MongoStore=require('connect-mongo')
-// var db=require('../config/DBConfig');
-
-// var app = express();
-
-// app.use(session({
-//   secret: 'work hard',
-//   resave: true,
-//   saveUninitialized: false, 
-//   cookie: {
-//     path: '/',
-//     httpOnly: true,
-//     secure: true,
-//     maxAge:  1800000
-// },
-//   store: new MongoStore({
-//     mongooseConnection: db
-//   })
-// }));
-
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
