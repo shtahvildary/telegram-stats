@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var user_sc=require("../Schema/user");
-var auth=require('../tools/auth');
+var auth=require('../tools/authentication');
+//var auth=require('../tools/auth');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -9,13 +10,14 @@ router.get('/', function(req, res, next) {
 });
 
 //Add new user
-router.post('/register', function (req, res) {
+router.post('/register',auth, function (req, res) {
   console.log('Now U can register a new user...');
   var user = new user_sc(req.body);
   user.save(function (err, result) {
     if (!err) {
 
-      var token=auth.tokenize(result._id);
+      //var token=auth.tokenize(result._id);
+      req.session.userId=result._id;
       res.json({
         user: result,
         token:token
@@ -36,10 +38,14 @@ router.post('/login', function (req, res) {
   }, function (err, result) {
     if (!err) {
       if (result) {
-        var token=auth.tokenize(result._id);
+        //var token=auth.tokenize(result._id);
+      req.session.userId=result._id;
+      console.log(result._id)
+      console.log(req.session.userId)
+        
         res.json({
           user: result,
-          token:token
+          //token:token
         });
       } else {
         res.status(401).json({
@@ -57,7 +63,7 @@ router.post('/login', function (req, res) {
 })
 
 //Get all users
-router.post('/selectAllUsers', function (req, res) {
+router.post('/selectAllUsers', auth,function (req, res) {
   user_sc.find({}, function (err, result) {
     if (!err) {
       if (result) {
@@ -77,5 +83,19 @@ router.post('/selectAllUsers', function (req, res) {
   })
 })
 
+
+// GET /logout
+router.get('/logout', function(req, res, next) {
+  if (req.session) {
+    // delete session object
+    req.session.destroy(function(err) {
+      if(err) {
+        return next(err);
+      } else {
+        return res.redirect('/');
+      }
+    });
+  }
+});
 
 module.exports = router;

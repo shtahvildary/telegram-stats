@@ -1,4 +1,5 @@
 var mongoose=require('mongoose');
+var bcrypt=require("bcrypt");
 
 var sc_user = mongoose.Schema({
     username:{type:'string' ,unique : true, required : true,trim: true},
@@ -9,4 +10,18 @@ var sc_user = mongoose.Schema({
     permitedChannelsId:{type:["string"]}
 });
 //user collection
+
+//hashing a password before saving it to the database
+sc_user.pre('save', function (next) {
+    console.log("hashing is started...")
+    var user = this._doc;
+    console.log(user.password);
+    bcrypt.hash(user.password, 10, function (err, hash){
+      if (err) {
+        return next(err);
+      }
+      user.password = hash;
+      next();
+    })
+  });
 module.exports=mongoose.model('User',sc_user);

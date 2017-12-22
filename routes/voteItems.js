@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var voteItem_sc = require("../Schema/voteItems");
+var auth = require('../tools/authentication');
 
 
 //Add new program or channel
-router.post('/new', function (req, res) {
+router.post('/new', auth,function (req, res) {
   console.log('Now U can save a new program or channel (voteItems)...');
   var voteItem = new voteItem_sc(req.body);
   console.log(req.body);
@@ -25,7 +26,7 @@ router.post('/new', function (req, res) {
 });
 
 //Get all programs and channels (voteItems) which are enable (not deleted)
-router.post('/all', function (req, res) {
+router.post('/all', auth,function (req, res) {
   voteItem_sc.find({enable:1}, function (err, result) {
     if (!err) {
       if (result) {
@@ -46,7 +47,7 @@ router.post('/all', function (req, res) {
 })
 
 //Get all programs and channels (voteItems) ENABLE+DISABLE for recovery
-router.post('/all/recover', function (req, res) {
+router.post('/all/recover', auth,function (req, res) {
   voteItem_sc.find({}, function (err, result) {
     if (!err) {
       if (result) {
@@ -90,7 +91,7 @@ router.post('/all/recover', function (req, res) {
 
 
 //update voteItems (by id)
-router.post('/update',function(req,res){
+router.post('/update',auth,function(req,res){
   console.log('query:',req.body)
   voteItem_sc.findById(req.body._id).exec(function(err,result){
     if(!err){
@@ -122,7 +123,7 @@ router.post('/update',function(req,res){
 //URL: localhost:5001/voteItems/disable
 //INPUT:{"_id":"5a1e711ed411741d84d10a29"}
 
-router.post('/disable', function (req, res) {
+router.post('/disable',auth, function (req, res) {
   console.log('query', req.body)
     voteItem_sc.findById(req.body._id).exec(function (err, result) {
     if (!err) {
@@ -151,7 +152,7 @@ router.post('/disable', function (req, res) {
 //URL: localhost:5001/voteItems/recover
 //INPUT:{"_id":"5a1e711ed411741d84d10a29"}
 
-router.post('/recover', function (req, res) {
+router.post('/recover', auth,function (req, res) {
   console.log('query', req.body)
     voteItem_sc.findById(req.body._id).exec(function (err, result) {
     if (!err) {
@@ -181,7 +182,7 @@ router.post('/recover', function (req, res) {
 //URL: localhost:5001/voteItems/delete
 //INPUT:{"_id":"5a1e711ed411741d84d10a29"}
 
-router.post('/delete', function (req, res) {
+router.post('/delete',auth, function (req, res) {
   console.log('query', req.body)
     voteItem_sc.findByIdAndRemove(req.body._id).exec(function (err, result) {
     if (!err) {

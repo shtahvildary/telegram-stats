@@ -12,8 +12,19 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var messages=require('./routes/messages');
 var voteItems=require('./routes/voteItems');
+var session=require('express-session')
 
 var app = express();
+
+//use sessions for tracking logins
+app.use(session({
+  secret: 'work hard',
+  resave: true,
+  saveUninitialized: false,
+  // store: new MongoStore({
+  //   mongooseConnection: db
+  // })
+}));
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
