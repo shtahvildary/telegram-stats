@@ -10,16 +10,19 @@
             response.messages.map(function (item) {
                 $('#messages-list').append(`
                 <div class="card">
+
+                
+
+                <span class="card-title">Card Title</span>
+              </div>
                 <div class="card-content">
                 
                   <p>` + item.message + `</p>
                   <p>` + item.date + `</p>
                   <a class="waves-effect waves-light btn modal-trigger reply" id="btnReply-` + item._id + `" href="#replyModal">پاسخ
                   <i class="material-icons">reply</i></a>
-                  
-                  
+
                 </div>
-                
                 
               </div>`);
             });
