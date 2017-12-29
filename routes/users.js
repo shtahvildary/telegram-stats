@@ -59,7 +59,8 @@ router.post('/login', function (req, res) {
         res.json({
           user: result,
           cookie:req.session.cookie,
-          sName:req.session.name
+          sName:req.session.name,
+          auth:true
         });
         res.end('done');
 
