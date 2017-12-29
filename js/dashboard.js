@@ -2,7 +2,8 @@
     
     console.log('hey')
     $(function () {
-        post('/messages/select/last/date',{},function(response){
+        post('/messages/select/last/date',{token:$.cookie("token")},function(response){
+            console.log({token:$.cookie("token")})
             console.log('last messages',response)
             response.messages.map(function(item){
             $('#last-messages').append(`<li class="collection-item">
