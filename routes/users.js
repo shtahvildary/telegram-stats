@@ -49,7 +49,6 @@ router.post('/login', function (req, res) {
   }, function (err, result) {
     if (!err) {
       if (result) {
-<<<<<<< HEAD
         bcrypt.compare(req.body.password, result.password, function (err, same) {
           if (!same) {
             return res.status(401).json({
@@ -57,20 +56,6 @@ router.post('/login', function (req, res) {
               auth: false
             })
           }
-=======
-        //var token=auth.tokenize(result._id);
-      req.session.userId=result._id;
-      console.log(req.session.cookie)
-      console.log(req.session.userId)
-        
-        res.json({
-          user: result,
-          cookie:req.session.cookie,
-          sName:req.session.name,
-          auth:true
-        });
-        res.end('done');
->>>>>>> 8eb6b355f742dabd1a719d47c94f7373b037bc44
 
           //var token=auth.tokenize(result._id);
           req.session.userId = result._id;
