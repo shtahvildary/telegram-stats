@@ -9,7 +9,7 @@
             $('#messages-list').empty();
             response.messages.map(function (item) {
                 $('#messages-list').append(`
-                <div class="card">
+                <div class="card `+ (item.replys.length > 0 ? '': 'grey') +`">
 
                 
 
@@ -47,11 +47,12 @@
             response.messages.map(function (item) {
 
                 $('#messages-list').append(`
-                <div class="card">
+                <div class="card `+ (item.replys.length > 0 ? '': 'grey') +`">
                 <div class="card-content">
-                  
+                  `+(item.type!='text'?'<  <video class="responsive-video" controls><source src="movie.mp4" type="video/mp4"></video>':'')+`<p>
                   <p>` + item.message + `</p>
                   <p>` + item.date + `</p>
+                
                   <a class="waves-effect waves-light btn modal-trigger reply" id="btnReply-` + item._id + `" chatId="` + item.chatId + `" msgId="` + item._id + `" href="#replyModal">پاسخ
                   <i class="material-icons">reply</i></a>
                   
