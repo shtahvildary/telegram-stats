@@ -2,11 +2,13 @@ var express = require('express');
 var router = express.Router();
 var message_sc = require("../Schema/messages");
 var moment = require('moment');
-var auth = require('../tools/auth');
+var auth = require('../tools/authentication');
+//var auth = require('../tools/auth');
 var request = require('request');
 
+
 //select all sort by date
-router.post('/select/all/date', function (req, res) {
+router.post('/select/all/date',auth, function (req, res,next) {
     message_sc.find({}).sort('-date').exec(function (err, result) {
         //pagination should be handled
         if (!err) {
@@ -19,10 +21,15 @@ router.post('/select/all/date', function (req, res) {
             });
         }
     })
+// }
+// else {
+//     res.status(500).json({
+//         error: err
+//     });}
 })
 
 //search
-router.post('/search', function (req, res) {
+router.post('/search',auth, function (req, res) {
 
     console.log('query', req.body)
     message_sc.find({
@@ -46,7 +53,7 @@ router.post('/search', function (req, res) {
 })
 
 //Select last 5 messages sort by date
-router.post('/select/last/date', function (req, res) {
+router.post('/select/last/date',auth, function (req, res) {
     message_sc.find({}).sort('-date').limit(5).exec(function (err, result) {
         //pagination should be handled
         if (!err) {
@@ -62,7 +69,7 @@ router.post('/select/last/date', function (req, res) {
 })
 
 //date.gethours
-router.post('/chart/daily', function (req, res) {
+router.post('/chart/daily', auth,function (req, res) {
     console.log(req.body);
     var h0 = new Date(req.body.date);
     var h24 = new Date(req.body.date);
@@ -98,7 +105,7 @@ router.post('/chart/daily', function (req, res) {
         }
     })
 })
-router.post('/chart/weekly', function (req, res) {
+router.post('/chart/weekly',auth, function (req, res) {
     console.log('weekly', req.body);
     var today = new Date(req.body.date);
     var sat = new Date(req.body.date);
@@ -143,7 +150,7 @@ router.post('/chart/weekly', function (req, res) {
         }
     })
 })
-router.post('/chart/monthly', function (req, res) {
+router.post('/chart/monthly', auth,function (req, res) {
     console.log('monthly', req.body);
     var today = new Date(req.body.date);
     var sat = new Date(req.body.date);
@@ -191,7 +198,7 @@ router.post('/chart/monthly', function (req, res) {
 var botToken = "449968526:AAGY4Tz48MiN8uxUD_0nWHFZSQscD9OQ_Vk";
 
 //save reply for a message
-router.post('/reply', function (req, res) {
+router.post('/reply', auth,function (req, res) {
     console.log('query:', req.body)
 
 
