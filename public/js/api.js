@@ -9,7 +9,7 @@ var post = function (endpoint, data,callback) {
     $
         .ajax({
             method: "POST",
-            url: "http://192.168.1.5:5001" +endpoint,
+            url: "http://172.16.17.149:5001" +endpoint,
             // url: "http://192.168.1.5:5001" +endpoint,
 //            url: "http://178.33.79.204:5001" +endpoint,
             data: data,

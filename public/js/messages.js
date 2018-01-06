@@ -48,8 +48,10 @@
 
                 $('#messages-list').append(`
                 <div class="card `+ (item.replys.length > 0 ? '': 'grey') +`">
-                <div class="card-content">
-                  `+(item.type!='text'?'<  <video class="responsive-video" controls><source src="movie.mp4" type="video/mp4"></video>':'')+`<p>
+                `+(item.type=="video" ? '<div class="card-image"><img src="../public/files/photos/file_2.jpg"><span class="card-title">Card Title</span></div><div class="col s2"><img src="../public/files/photos/sample-1.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class --></div>':'')+`
+
+                <div class="card-content activator ">
+                  `+(item.type!='text'?'<video class="responsive-video" controls><source src="../public/files//videos/big_buck_bunny.mp4" type="video/mp4"></video>':'')+`<p>
                   <p>` + item.message + `</p>
                   <p>` + item.date + `</p>
                 
@@ -57,6 +59,8 @@
                   <i class="material-icons">reply</i></a>
                   
                 </div>
+                `+ (item.replys.length > 0 ? ' <div class="card-reveal"><span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span><p>Here is some more information about this product that is only revealed once clicked on.</p></div>': '') +`
+               
                 
               </div>`);
             });
