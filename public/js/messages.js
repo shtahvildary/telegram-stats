@@ -51,7 +51,9 @@
                 `+(item.type=="video" ? '<div class="card-image"><img src="../public/files/photos/file_2.jpg"><span class="card-title">Card Title</span></div><div class="col s2"><img src="../public/files/photos/sample-1.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class --></div>':'')+`
 
                 <div class="card-content activator ">
-                  `+(item.type!='text'?'<video class="responsive-video" controls><source src="../public/files//videos/big_buck_bunny.mp4" type="video/mp4"></video>':'')+`<p>
+                  `+(item.type='video'?'<video class="responsive-video" controls><source src="../public/files//videos/big_buck_bunny.mp4" type="video/mp4"></video>':'')+`<p>
+                  `+(item.type='photo'?'<img src="../public/files/photos/sample-1.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class --></div>':'')+`<p>
+                  `+(item.type=('voice'||'music')?'<audio controls><source src="../public/files/file_3.mp3" type="audio/mp3">Your browser does not support the audio element.</audio>':'')+`<p>
                   <p>` + item.message + `</p>
                   <p>` + item.date + `</p>
                 
