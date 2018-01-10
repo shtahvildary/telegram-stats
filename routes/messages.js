@@ -76,12 +76,14 @@ router.post('/chart/daily', auth,function (req, res) {
     console.log(h0);
     h0.setHours(0, 0, 0, 0);
     h24.setHours(23, 59, 59, 999);
-
+    
+    // console.log('h0:'+h0);
+    // console.log('h24:'+h24);
+    
     message_sc.find({
         'date': {
             $gt: h0
-        },
-        'date': {
+        ,
             $lt: h24
         }
     }).exec(function (err, result) {
@@ -125,8 +127,7 @@ router.post('/chart/weekly',auth, function (req, res) {
     message_sc.find({
         'date': {
             $gt: firstday
-        },
-        'date': {
+       ,
             $lt: lastday
         }
     }).exec(function (err, result) {
@@ -170,8 +171,7 @@ router.post('/chart/monthly', auth,function (req, res) {
     message_sc.find({
         'date': {
             $gt: firstday
-        },
-        'date': {
+        ,
             $lt: lastday
         }
     }).exec(function (err, result) {
