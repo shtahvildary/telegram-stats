@@ -8,7 +8,7 @@ var request = require('request');
 
 
 //select all sort by date
-router.post('/select/all/date',auth, function (req, res,next) {
+router.post('/select/all/date', auth, function (req, res, next) {
     message_sc.find({}).sort('-date').exec(function (err, result) {
         //pagination should be handled
         if (!err) {
@@ -21,15 +21,15 @@ router.post('/select/all/date',auth, function (req, res,next) {
             });
         }
     })
-// }
-// else {
-//     res.status(500).json({
-//         error: err
-//     });}
+    // }
+    // else {
+    //     res.status(500).json({
+    //         error: err
+    //     });}
 })
 
 //search
-router.post('/search',auth, function (req, res) {
+router.post('/search', auth, function (req, res) {
 
     console.log('query', req.body)
     message_sc.find({
@@ -53,7 +53,7 @@ router.post('/search',auth, function (req, res) {
 })
 
 //Select last 5 messages sort by date
-router.post('/select/last/date',auth, function (req, res) {
+router.post('/select/last/date', auth, function (req, res) {
     message_sc.find({}).sort('-date').limit(5).exec(function (err, result) {
         //pagination should be handled
         if (!err) {
@@ -69,21 +69,20 @@ router.post('/select/last/date',auth, function (req, res) {
 })
 
 //date.gethours
-router.post('/chart/daily', auth,function (req, res) {
+router.post('/chart/daily', auth, function (req, res) {
     console.log(req.body);
     var h0 = new Date(req.body.date);
     var h24 = new Date(req.body.date);
     console.log(h0);
     h0.setHours(0, 0, 0, 0);
     h24.setHours(23, 59, 59, 999);
-    
+
     // console.log('h0:'+h0);
     // console.log('h24:'+h24);
-    
+
     message_sc.find({
         'date': {
-            $gt: h0
-        ,
+            $gt: h0,
             $lt: h24
         }
     }).exec(function (err, result) {
@@ -107,7 +106,7 @@ router.post('/chart/daily', auth,function (req, res) {
         }
     })
 })
-router.post('/chart/weekly',auth, function (req, res) {
+router.post('/chart/weekly', auth, function (req, res) {
     console.log('weekly', req.body);
     var today = new Date(req.body.date);
     var sat = new Date(req.body.date);
@@ -126,8 +125,7 @@ router.post('/chart/weekly',auth, function (req, res) {
 
     message_sc.find({
         'date': {
-            $gt: firstday
-       ,
+            $gt: firstday,
             $lt: lastday
         }
     }).exec(function (err, result) {
@@ -151,7 +149,7 @@ router.post('/chart/weekly',auth, function (req, res) {
         }
     })
 })
-router.post('/chart/monthly', auth,function (req, res) {
+router.post('/chart/monthly', auth, function (req, res) {
     console.log('monthly', req.body);
     var today = new Date(req.body.date);
     var sat = new Date(req.body.date);
@@ -170,8 +168,7 @@ router.post('/chart/monthly', auth,function (req, res) {
 
     message_sc.find({
         'date': {
-            $gt: firstday
-        ,
+            $gt: firstday,
             $lt: lastday
         }
     }).exec(function (err, result) {
@@ -195,10 +192,60 @@ router.post('/chart/monthly', auth,function (req, res) {
         }
     })
 })
+
+router.post('/chart/selectedDate', auth, function (req, res) {
+    console.log('selectedDate', req.body);
+    var firstday = new Date(req.body.firstday);
+    var lastday = new Date(req.body.lastday);
+
+
+
+    // sat=new Date(today.getFullYear(),today.getMonth,)
+    // if(sat.getDay)
+    firstday.setHours(0, 0, 0, 0);
+    lastday.setHours(23, 59, 59, 999);
+
+    message_sc.find({
+        'date': {
+            $gt: firstday,
+            $lt: lastday
+        }
+    }).exec(function (err, result) {
+        //pagination should be handled
+        if (!err) {
+
+
+            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+
+
+            var diffDays = Math.round(Math.abs((firstday.getTime() - lastday.getTime()) / (oneDay)));
+            console.log('diffDays: '+diffDays)
+
+
+            var msgCounts = Array(diffDays);
+            // var msgCounts = [0, 0, 0, 0, 0, 0, 0];
+            // console.log(msgCounts.length)
+
+
+            result.forEach(function (message) {
+                msgCounts[message.date.getHours()] += 1;
+            });
+            res.status(200).json({
+                text: msgCounts
+            })
+        } else {
+            res.status(500).json({
+                error: err
+            });
+        }
+    })
+})
+
+
 var botToken = "449968526:AAGY4Tz48MiN8uxUD_0nWHFZSQscD9OQ_Vk";
 
 //save reply for a message
-router.post('/reply', auth,function (req, res) {
+router.post('/reply', auth, function (req, res) {
     console.log('query:', req.body)
 
 
@@ -207,9 +254,10 @@ router.post('/reply', auth,function (req, res) {
         if (!err) {
             console.log("message:", result)
             console.log("req.body.reply:", req.body)
-             var reply={text: req.body.text,
+            var reply = {
+                text: req.body.text,
                 //date:req.body.date,
-                userId:req.body.userId
+                userId: req.body.userId
             }
 
             request({
