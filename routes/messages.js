@@ -13,7 +13,8 @@ router.post('/select/all/date', auth, function (req, res, next) {
         //pagination should be handled
         if (!err) {
             res.status(200).json({
-                messages: result
+                messages: result,
+                userId: req.body.token
             });
         } else {
             res.status(500).json({
@@ -42,7 +43,9 @@ router.post('/search', auth, function (req, res) {
         //pagination should be handled
         if (!err) {
             res.status(200).json({
-                messages: result
+                messages: result,
+                userId: req.body.token
+                
             });
         } else {
             res.status(500).json({
@@ -58,7 +61,9 @@ router.post('/select/last/date', auth, function (req, res) {
         //pagination should be handled
         if (!err) {
             res.status(200).json({
-                messages: result
+                messages: result,
+                userId: req.body.token
+                
             });
         } else {
             res.status(500).json({
@@ -97,7 +102,9 @@ router.post('/chart/daily', auth, function (req, res) {
                 msgCounts[message.date.getHours()] += 1;
             });
             res.status(200).json({
-                text: msgCounts
+                text: msgCounts,
+                userId: req.body.token
+                
             })
         } else {
             res.status(500).json({
