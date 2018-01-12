@@ -15,6 +15,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var messages = require('./routes/messages');
 var voteItems = require('./routes/voteItems');
+var votes = require('./routes/votes');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
@@ -116,6 +117,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/messages', messages);
 app.use('/voteItems', voteItems);
+app.use('/votes', votes);
 
 
 

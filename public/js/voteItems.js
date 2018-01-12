@@ -34,6 +34,10 @@
                 alert("ثبت اطلاعات با موفقیت همراه نبود. لطفا دوباره سعی کنید")
             } else {
                 alert("ثبت اطلاعات با موفقیت انجام شد")
+                // $("#newVoteItemForm").reset();
+                document.getElementById("newVoteItemForm").reset()
+                // document.getElementById("voteItemTitle").reset()
+                // document.getElementById("description").reset()
             }
         });
     }

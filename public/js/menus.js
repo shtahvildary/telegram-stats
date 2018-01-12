@@ -20,7 +20,7 @@ $("#navbar").append(`
           <a href="#" data-activates="mobile-demo" class="right button-collapse">
               <i class="material-icons">menu</i>
           </a>
-          <a href="#!" class="right local-nav-title">آمار تلگرام</a>
+          <a href="#!" class="right local-nav-title">آمار شبکه آموزش</a>
 
           <ul class="left">
               <li id="nav-logout" class="local-nav-items-large">
@@ -50,6 +50,9 @@ $("#navbar").append(`
               </li>
               <li>
                   <a href="voteItems.html">برنامه ها و کانال ها</a>
+              </li>
+              <li>
+                  <a href="votingResult.html">نظرسنجی ها</a>
               </li>
               <li>
                   <a href="settings.html">تنظیمات</a>
