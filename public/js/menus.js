@@ -8,7 +8,7 @@ $("#navbar").append(`
   <div id="navbar">
   <ul id="dropdown1" class="dropdown-content">
       <li>
-          <a href="#!">حساب کاربری</a>
+          <a href="useraccount.html">حساب کاربری</a>
       </li>
       <li>
           <a href="#" class="logout">خروج</a>
@@ -27,7 +27,7 @@ $("#navbar").append(`
                   <a href="#" class="logout">خروج</a>
               </li>
               <li id="nav-account" class="local-nav-items-large">
-                  <a href="badges.html">حساب کاربری</a>
+                  <a href="userAccount.html">حساب کاربری</a>
               </li>
 
               <li class="local-nav-items-small">

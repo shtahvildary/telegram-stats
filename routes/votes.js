@@ -60,6 +60,61 @@ router.post('/all/scores', auth,function (req, res) {
 })
 
 
+router.post('/all/scores2', auth,function (req, res) {
+  var  voteItemsArray=voteItem_sc.find({},{title:1,_id:1})
+    // var  voteItemsArray=voteItem_sc.find({},{title:1,_id:1},function (err, result) {
+    console.log(voteItemsArray)
+    // votes_sc.find({}).populate({ path: 'vote.destinationId', select: 'title' }).exec(function (err, result) {
+    if (!err) {
+      // if (result) {
+        // // console.log(result[0]._doc.vote)
+        // res.json({
+        //   voteItemsArray: result
+        // });
+        // // console.log(res.voteItemsArray)
+
+        
+
+      //   votesArray.forEach(function (message) {
+      //     msgCounts[message.date.getHours()] += 1;
+      // });
+        // voteItem_sc.find({'_id':})
+
+      // } else {
+      //   res.json({
+      //     error: 'There is no Vote...'
+      //   });
+      // }
+    } else {
+      res.status(500).json({
+        error: err
+      })
+    }
+
+  // }).toArray(function(err, allTheThings) {
+    
+        // Do whatever with the array
+    
+        // Spit them all out to console
+      //   console.log(allTheThings);
+    
+      //   // Get the first one
+      //   allTheThings[0];
+    
+      //   // Iterate over them
+      //   allTheThings.forEach(function(thing) {
+      //     // This is a single instance of thing
+      //     thing;
+      //   });
+    
+      //   // Return them
+      //   callback(null, allTheThings);
+      // });
+  console.log(voteItemsArray)
+  
+
+})
+
 // //Search voteItems
 // router.post('/search', function (req, res) {
 //   console.log('query', req.body.query)
