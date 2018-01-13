@@ -31,7 +31,7 @@ router.post('/all', auth,function (req, res) {
 
 router.post('/all/scores', auth,function (req, res) {
   // votes_sc.find({},{vote:1,_id:0},function (err, result) {
-    votes_sc.find({},{vote:1,_id:0}).populate('destinationId','title').exec(function (err, result) {
+    votes_sc.find({},{vote:1,_id:0}).populate({ path: 'vote.destinationId', select: 'title' }).exec(function (err, result) {
       // votes_sc.find({}).populate({ path: 'vote.destinationId', select: 'title' }).exec(function (err, result) {
     if (!err) {
       if (result) {

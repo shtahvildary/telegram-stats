@@ -54,7 +54,7 @@
                 
 
                 <div class="card-content activator ">
-                <p>` + item.vote.destinationId + ` از آرای ثبت شده ` + item.vote.score + ` امتیاز کسب کرده است.</p>
+                <p>"` + item.vote.destinationId.title + `" از آرای ثبت شده ` + item.vote.score + ` امتیاز کسب کرده است.</p>
                  
                 </div>   
                 </div>`);

@@ -71,7 +71,7 @@
                 </div>`);
                 
                 jQuery(item.replys).each(function(i, reply) {
-                    jQuery('#replys-'+item._id).append(`<p> کاربر:`+reply.userId + ' پاسخ:' + reply.text+' تاریخ:'+reply.date+`</p>`);
+                    jQuery('#replys-'+item._id).append(`<p> کاربر:`+reply.userId.username + ' پاسخ:' + reply.text+' تاریخ:'+reply.date+`</p>`);
                    
                 });
                 // $('#replys-'+item._id).append(`<p>‍‍ سلام`+item.replys.map(function (reply) {+`<p>` + reply.text + `</p>کاربر:`+ reply.userId + `</p>تاریخ: `+ reply.date + `</p>`})+`</div>`);

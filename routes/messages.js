@@ -9,12 +9,14 @@ var request = require('request');
 
 //select all sort by date
 router.post('/select/all/date', auth, function (req, res, next) {
-    message_sc.find({}).sort('-date').exec(function (err, result) {
+    message_sc.find({}).populate({path: 'replys.userId', select: 'username'}).sort('-date').exec(function (err, result) {
         //pagination should be handled
         if (!err) {
             res.status(200).json({
                 messages: result,
-                userId: req.body.token
+                // userId: req.body.token
+                userId:req.session.userId
+                
             });
         } else {
             res.status(500).json({
@@ -44,7 +46,9 @@ router.post('/search', auth, function (req, res) {
         if (!err) {
             res.status(200).json({
                 messages: result,
-                userId: req.body.token
+                // userId: req.body.token
+                userId:req.session.userId
+                
                 
             });
         } else {
@@ -62,7 +66,9 @@ router.post('/select/last/date', auth, function (req, res) {
         if (!err) {
             res.status(200).json({
                 messages: result,
-                userId: req.body.token
+                // userId: req.body.token
+                userId:req.session.userId
+                
                 
             });
         } else {
@@ -103,7 +109,9 @@ router.post('/chart/daily', auth, function (req, res) {
             });
             res.status(200).json({
                 text: msgCounts,
-                userId: req.body.token
+                // userId: req.body.token
+                userId:req.session.userId
+                
                 
             })
         } else {
@@ -264,7 +272,10 @@ router.post('/reply', auth, function (req, res) {
             var reply = {
                 text: req.body.text,
                 //date:req.body.date,
-                userId: req.body.userId
+                // userId: req.body.userId
+                // userId: req.body.token
+                userId:req.session.userId
+                
             }
 
             request({
@@ -283,10 +294,10 @@ router.post('/reply', auth, function (req, res) {
                     })
                 } else {
 
-                    if (result.reply) {
-                        result.reply.push(reply || result.replys);
+                    if (result._doc.replys) {
+                        result._doc.replys.push(reply || result._doc.replys);
                     } else {
-                        result.replys = reply || result.replys;
+                        result._doc.replys = reply || result._doc.replys;
 
                     }
                     // Save the updated document back to the database
