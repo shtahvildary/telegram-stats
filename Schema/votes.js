@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+// var voteItemSchema=require("./voteItems");
+// var voteItems = mongoose.model('voteItem', voteItemSchema);
 
 var voteSchema = mongoose.Schema({
     chatId: String,
@@ -10,7 +12,7 @@ var voteSchema = mongoose.Schema({
         default: Date.now
     },
     vote: {
-        destinationId: mongoose.SchemaTypes.ObjectId, //channelId or programId
+        destinationId:{ type:mongoose.SchemaTypes.ObjectId, ref:"voteItems"}, //channelId or programId
         score: { //0<=score<=5
             type: Number,
             default: 0
