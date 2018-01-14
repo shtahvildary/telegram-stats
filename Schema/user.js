@@ -4,6 +4,8 @@ var bcrypt=require("bcrypt");
 var sc_user = mongoose.Schema({
     username:{type:'string' ,unique : true, required : true,trim: true},
     password:{type:'string',required:true},
+    firstName:{type:'string'},
+    lastName:{type:'string'},
     email:{type:'string',unique : true, required : true,trim: true},
     phoneNumber:{type:["number"]},
     status:{type:'number',default:0},//0:active - 1:deactive - -1:deleted - 3:banned
@@ -15,7 +17,7 @@ var sc_user = mongoose.Schema({
 sc_user.pre('save', function (next) {
     console.log("hashing is started...")
     var user = this._doc;
-    console.log(user.password);
+    // console.log(user.password);
     bcrypt.hash(user.password, 10, function (err, hash){
       if (err) {
         return next(err);

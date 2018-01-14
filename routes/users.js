@@ -31,6 +31,37 @@ router.post('/register', auth, function (req, res) {
   });
 });
 
+//update user
+router.post('/update', auth, function (req, res) {
+  console.log('U can update user...');
+  console.log('query:', req.body);
+  user_sc.findById(req.session.userId).exec(function (err, result) {
+    if (err) {
+      res.status(500).json({
+        error: err
+      });
+    }
+    //else
+    console.log("user: ", result);
+    result.firstName = req.body.firstName || result.firstName;
+    result.lastName = req.body.lastName || result.lastName;
+    
+    result.password = req.body.password || result.password;
+    result.email = req.body.email || result.email;
+    result.phoneNumber = req.body.phoneNumber || result.phoneNumber;
+    result.status = req.body.status || result.status;
+    result.permitedChannelsId = req.body.permitedChannelsId || result.permitedChannelsId;
+    //save updated user
+    result.save(function (err, result) {
+      if (err) {
+        res.status(500).send(err)
+      }
+      //else
+      res.status(200).send(result);
+    })
+  })
+})
+
 //Login
 router.post('/login', function (req, res) {
   // bcrypt.hash(req.body.password, 10, function (err, hash){
