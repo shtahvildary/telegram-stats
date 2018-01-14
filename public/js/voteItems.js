@@ -65,6 +65,9 @@
 
 
     $(function () {
+        if (!$.cookie("token")) {
+            window.location.replace("../login.html");
+        }
         ////////////////////////////////////
         //TODO: search should be completed 
         ////////////////////////////////////

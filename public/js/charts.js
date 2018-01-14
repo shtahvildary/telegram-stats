@@ -110,6 +110,9 @@ function drawLineChart(element, data) {
 }
 (function ($) {
     $(function () {
+        if (!$.cookie("token")) {
+            window.location.replace("../login.html");
+        }
 
 
         var now = new Date();

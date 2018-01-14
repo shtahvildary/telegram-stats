@@ -29,6 +29,9 @@
 //         })
 //     }
      $(function () {
+        if (!$.cookie("token")) {
+            window.location.replace("../login.html");
+        }
 
 //         $('#search').keypress(function (e) {
 //             if (e.which == 13) {
