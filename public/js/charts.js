@@ -212,32 +212,32 @@ function drawLineChart(element, data) {
             })
         });
 
-        post('/messages/chart/selectedDate', {
-            firstday: document.getElementById('firstday'),
-            lastday:document.getElementById('lastday')
-        }, function (response) {
-            console.log("firstday: "+document.getElementById('firstday'))
-            console.log("lastday: "+document.getElementById('lastday'))
-            drawLineChart('chart-msg-selectedDate', {
-                labels: [
-                    '1','2','3','4','5','6','7','8','9','10','11','12','13','14','15',
-                    '16','17','18','19','20','21','22','23','24','25','26','27','28','29', '30', '31'
-                ],
-                datasets: [{
-                    label: 'متن',
-                    data: response.text
-                }, {
-                    label: 'عکس',
-                    data: response.image
-                }, {
-                    label: 'ویدیو',
-                    data: response.video
-                }, {
-                    label: 'صوت',
-                    data: response.voice
-                }]
-            })
-        });
+        // post('/messages/chart/selectedDate', {
+        //     firstday: document.getElementById('firstday'),
+        //     lastday:document.getElementById('lastday')
+        // }, function (response) {
+        //     console.log("firstday: "+document.getElementById('firstday'))
+        //     console.log("lastday: "+document.getElementById('lastday'))
+        //     drawLineChart('chart-msg-selectedDate', {
+        //         labels: [
+        //             '1','2','3','4','5','6','7','8','9','10','11','12','13','14','15',
+        //             '16','17','18','19','20','21','22','23','24','25','26','27','28','29', '30', '31'
+        //         ],
+        //         datasets: [{
+        //             label: 'متن',
+        //             data: response.text
+        //         }, {
+        //             label: 'عکس',
+        //             data: response.image
+        //         }, {
+        //             label: 'ویدیو',
+        //             data: response.video
+        //         }, {
+        //             label: 'صوت',
+        //             data: response.voice
+        //         }]
+        //     })
+        // });
 
     }); // end of document ready
 })(jQuery); // end of jQuery name space
