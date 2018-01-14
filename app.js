@@ -55,23 +55,23 @@ bot.text(function (msg, reply, next) {
     }
 
   });
-  var keys = [
-    [{
-        text: "1",
+  // var keys = [
+  //   [{
+  //       text: "1",
 
-      },
-      {
-        text: "2",
+  //     },
+  //     {
+  //       text: "2",
 
-      }, {
-        text: '3'
-      }
-    ],
-    [{
-      text: '4'
-    }]
-  ];
-  reply.keyboard(keys, true)
+  //     }, {
+  //       text: '3'
+  //     }
+  //   ],
+  //   [{
+  //     text: '4'
+  //   }]
+  // ];
+  // reply.keyboard(keys, true)
 })
 bot.video(function (msg, reply, next) {
   var newVideo = new messageDB({

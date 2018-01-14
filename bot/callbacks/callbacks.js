@@ -14,6 +14,9 @@ var voteItemsDB = require("../../Schema/voteItems");
 //TODO: these variables could be filled automaticly:
 var scoreCount = 5;
 ///////////////////////////////////////////////////////
+var voteItemTitle;
+
+
 
 module.exports = function (mainBot) {
     bot = mainBot;
@@ -63,7 +66,7 @@ module.exports = function (mainBot) {
         if (data.type !== 1) {
             return next();
         } else {
-            var voteItemTitle;
+            // var voteItemTitle;
             keyboards.fillScoreKeys(scoreCount, data.voteItemId, function (generatedKeys) {
                 
                 ///////////////////////////////////////////
@@ -72,22 +75,24 @@ module.exports = function (mainBot) {
 
                     if (err) throw err;
                     console.log(result);
-                    voteItemTitle = result.title;
+                    voteItemTitle = result._doc.title;
+                    // data.voteItemId=result._doc.title;
+                    reqHandler("sendMessage", {
+                        
+                        text: "به " + voteItemTitle + " از ۱ تا ۵ چه امتیازی می دهید؟",
+                        // text: "به " + data.voteItemId + " از ۱ تا ۵ چه امتیازی می دهید؟",
+                        chat_id: query.from.id,
+    
+                        reply_markup: {
+                            inline_keyboard: generatedKeys
+                        }
+                    }, function (body) {})
                 });
                 console.log(voteItemTitle);
 
                 ///////////////////////////////////////////
 
                 //console.log("data: "+data);
-                reqHandler("sendMessage", {
-                    //text: "به " + voteItemTitle + " از ۱ تا ۵ چه امتیازی می دهید؟",
-                    text: "به " + data.voteItemId + " از ۱ تا ۵ چه امتیازی می دهید؟",
-                    chat_id: query.from.id,
-
-                    reply_markup: {
-                        inline_keyboard: generatedKeys
-                    }
-                }, function (body) {})
             })
         }
     })
