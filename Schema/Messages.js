@@ -2,16 +2,14 @@ const mongoose=require("mongoose");
 
 var messageSchema=mongoose.Schema({
     chatId:String,
-    chatType:String,
-    voteItemId:String, //channel or program ID    
-    type:String,    
     chatTiltle:String,
-    type:String,
+    voteItemId:String, //channel or program ID
+    type:String,    
+    chatType:String,
     message:String,
     date:{type:Date,default:Date.now},
     keywords:[{word:String,count:Number}],
-    replys:[{text:String,userId:mongoose.SchemaTypes.ObjectId,date:{type:Date,default:Date.now}}],
-
+    replys:[{text:String,userId:{type: mongoose.SchemaTypes.ObjectId, ref:'User'},date:{type:Date,default:Date.now}}],
     //video,Audio,voice,photo,document,sticker,videoNote
     fileId:String,
     mime:String,
